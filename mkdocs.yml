@@ -23,7 +23,8 @@ theme:
 
 plugins:
   - search
-  - blog
+  - blog:
+      blog_dir: .
   - mermaid2
   - panzoom:
       full_screen: true
@@ -46,5 +47,4 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Blog: blog/index.md
   - About: about.md
