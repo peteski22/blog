@@ -1,0 +1,733 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Thoughts on distributed systems, authentication, and protocol design" name="description"/>
+<link href="https://peteski22.github.io/blog/blog/2025/11/17/mcps-identity-crisis-when-security-theatre-meets-enterprise-reality/" rel="canonical"/>
+<link href="../../../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.0" name="generator"/>
+<title>MCP's Identity Crisis: When Security Theatre Meets Enterprise Reality - Technical Blog</title>
+<link href="../../../../../assets/stylesheets/main.618322db.min.css" rel="stylesheet"/>
+<link href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../../../assets/stylesheets/panzoom.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<meta name="panzoom-theme" content="material">
+<meta name="panzoom-data" content='{"selectors": [".mermaid", ".d2"], "initial_zoom_level": 1.0}'> </head>
+<body data-md-color-accent="indigo" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#mcps-identity-crisis-when-security-theatre-meets-enterprise-reality">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Technical Blog" class="md-header__button md-logo" data-md-component="logo" href="../../../../.." title="Technical Blog">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Technical Blog
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              MCP's Identity Crisis: When Security Theatre Meets Enterprise Reality
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="" data-md-color-primary="indigo" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden="">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Technical Blog" class="md-nav__button md-logo" data-md-component="logo" href="../../../../.." title="Technical Blog">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Technical Blog
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../..">
+<span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<a class="md-nav__link" href="../../../../">
+<span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../../about/">
+<span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-architectural-context">
+<span class="md-ellipsis">
+      
+        The Architectural Context
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-current-state-a-tale-of-two-patterns">
+<span class="md-ellipsis">
+      
+        The Current State: A Tale of Two Patterns
+      
+    </span>
+</a>
+<nav aria-label="The Current State: A Tale of Two Patterns" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#whats-actually-happening-in-production">
+<span class="md-ellipsis">
+      
+        What's Actually Happening in Production
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-this-pattern-dominates">
+<span class="md-ellipsis">
+      
+        Why This Pattern Dominates
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-enterprise-authentication-landscape">
+<span class="md-ellipsis">
+      
+        The Enterprise Authentication Landscape
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-emerging-direction-url-mode-elicitation">
+<span class="md-ellipsis">
+      
+        The Emerging Direction: URL Mode Elicitation
+      
+    </span>
+</a>
+<nav aria-label="The Emerging Direction: URL Mode Elicitation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-non-interactive-problem">
+<span class="md-ellipsis">
+      
+        The Non-Interactive Problem
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-network-topology-challenge">
+<span class="md-ellipsis">
+      
+        The Network Topology Challenge
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-complexity-multiplication">
+<span class="md-ellipsis">
+      
+        The Complexity Multiplication
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-pattern-of-dismissal">
+<span class="md-ellipsis">
+      
+        The Pattern of Dismissal
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#examining-the-security-rationale">
+<span class="md-ellipsis">
+      
+        Examining the Security Rationale
+      
+    </span>
+</a>
+<nav aria-label="Examining the Security Rationale" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-validated-passthrough-pattern">
+<span class="md-ellipsis">
+      
+        The Validated Passthrough Pattern
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#trust-boundaries-and-reality">
+<span class="md-ellipsis">
+      
+        Trust Boundaries and Reality
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#a-pragmatic-path-forward">
+<span class="md-ellipsis">
+      
+        A Pragmatic Path Forward
+      
+    </span>
+</a>
+<nav aria-label="A Pragmatic Path Forward" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-conceptual-approach">
+<span class="md-ellipsis">
+      
+        The Conceptual Approach
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-broader-pattern">
+<span class="md-ellipsis">
+      
+        The Broader Pattern
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#moving-forward">
+<span class="md-ellipsis">
+      
+        Moving Forward
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#a-question-worth-answering">
+<span class="md-ellipsis">
+      
+        A Question Worth Answering
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content md-content--post" data-md-component="content">
+<div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner md-post">
+<nav class="md-nav md-nav--primary">
+<div class="md-post__back">
+<div class="md-nav__title md-nav__container">
+<a class="md-nav__link" href="../../../../">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+<span class="md-ellipsis">
+                    Back to index
+                  </span>
+</a>
+</div>
+</div>
+<div class="md-post__authors md-typeset">
+<div class="md-profile md-post__profile">
+<span class="md-author md-author--long">
+<img alt="Peter Wilson" src="https://github.com/peteski22.png"/>
+</span>
+<span class="md-profile__description">
+<strong>
+                        
+                          Peter Wilson
+                        
+                      </strong>
+<br/>
+                      Staff Engineer
+                    </span>
+</div>
+</div>
+<ul class="md-post__meta md-nav__list">
+<li class="md-nav__item md-nav__item--section">
+<div class="md-post__title">
+<span class="md-ellipsis">
+                    Metadata
+                  </span>
+</div>
+<nav class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<div class="md-nav__link">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"></path></svg>
+<time class="md-ellipsis" datetime="2025-11-17 00:00:00+00:00">November 17, 2025</time>
+</div>
+</li>
+<li class="md-nav__item">
+<div class="md-nav__link">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"></path></svg>
+<span class="md-ellipsis">
+                            in
+                            
+                              <a href="../../../../category/architecture/">Architecture</a>, 
+                              <a href="../../../../category/identity/">Identity</a>, 
+                              <a href="../../../../category/mcp/">MCP</a></span>
+</div>
+</li>
+<li class="md-nav__item">
+<div class="md-nav__link">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"></path></svg>
+<span class="md-ellipsis">
+                            
+                              6 min read
+                            
+                          </span>
+</div>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<article class="md-content__inner md-typeset">
+<h1 id="mcps-identity-crisis-when-security-theatre-meets-enterprise-reality">MCP's Identity Crisis: When Security Theatre Meets Enterprise Reality<a class="headerlink" href="#mcps-identity-crisis-when-security-theatre-meets-enterprise-reality" title="Permanent link">¶</a></h1>
+<p>The Model Context Protocol (MCP) promises to be the "USB-C" of LLM integrations; simple, universal, and "extremely easy to build." Yet a fundamental disconnect exists between its security guidance and how authentication works in production systems. This isn't just a theoretical concern; it's creating an ecosystem where even official implementations can't follow the stated best practices.</p>
+<!-- more -->
+<h2 id="the-architectural-context">The Architectural Context<a class="headerlink" href="#the-architectural-context" title="Permanent link">¶</a></h2>
+<p>MCP positions itself as a lightweight protocol for connecting LLMs to external systems. The stated design principles emphasise:</p>
+<ul>
+<li><strong>"Extremely easy to build"</strong> - Developers should focus on their core product</li>
+<li><strong>"Simple interfaces"</strong> with "minimal implementation overhead"</li>
+<li><strong>Universal connectivity</strong> - The USB-C analogy</li>
+</ul>
+<p>These are excellent principles. The protocol itself elegantly achieves them, except when it comes to authentication.</p>
+<h2 id="the-current-state-a-tale-of-two-patterns">The Current State: A Tale of Two Patterns<a class="headerlink" href="#the-current-state-a-tale-of-two-patterns" title="Permanent link">¶</a></h2>
+<p>The MCP specification (version 2025-06-18) provides no standard mechanism for upstream authentication. This silence, combined with security guidance that explicitly forbids token passthrough, has created a predictable outcome.</p>
+<h3 id="whats-actually-happening-in-production">What's Actually Happening in Production<a class="headerlink" href="#whats-actually-happening-in-production" title="Permanent link">¶</a></h3>
+<p>Let's examine the official MCP implementations:</p>
+<p><strong>Grafana's MCP Server:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"GRAFANA_SERVICE_ACCOUNT_TOKEN"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;your service account token&gt;"</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>GitHub's MCP Server:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"GITHUB_PERSONAL_ACCESS_TOKEN"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${input:github_token}"</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Stripe's MCP Server:</strong></p>
+<div class="highlight"><pre><span></span><code>npx<span class="w"> </span>@stripe/mcp<span class="w"> </span>--api-key<span class="o">=</span>YOUR_STRIPE_SECRET_KEY
+</code></pre></div>
+<p>Each injects credentials at instance startup, creating a 1:1 binding between process and identity. This pattern, whilst simple to implement; fundamentally prevents multi-tenancy and contradicts modern cloud-native principles.</p>
+<h3 id="why-this-pattern-dominates">Why This Pattern Dominates<a class="headerlink" href="#why-this-pattern-dominates" title="Permanent link">¶</a></h3>
+<p>These teams aren't taking shortcuts. They're responding rationally to constraints:</p>
+<ol>
+<li><strong>No standard exists</strong> for propagating user identity to upstream services</li>
+<li><strong>Token passthrough is explicitly forbidden</strong> in security guidance</li>
+<li><strong>The emerging alternative</strong> requires implementing OAuth in every server</li>
+</ol>
+<p>The result? Everyone defaults to the simplest working solution: static credentials per instance.</p>
+<h2 id="the-enterprise-authentication-landscape">The Enterprise Authentication Landscape<a class="headerlink" href="#the-enterprise-authentication-landscape" title="Permanent link">¶</a></h2>
+<p>To understand why this matters, let's examine how authentication actually works in enterprise environments:</p>
+<figure>
+<div class="panzoom-box" data-key="alt" id="panzoom0" oncontextmenu="return false;">
+<nav class="panzoom-nav">
+<button class="panzoom-info panzoom-button">
+<svg class="panzoom-icon" viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm169.8-90.7c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path>
+</svg>
+</button><button class="panzoom-reset panzoom-button">
+<svg class="panzoom-icon" viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<path d="M125.7 160l50.3 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L48 224c-17.7 0-32-14.3-32-32L16 64c0-17.7 14.3-32 32-32s32 14.3 32 32l0 51.2L97.6 97.6c87.5-87.5 229.3-87.5 316.8 0s87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3s-163.8-62.5-226.3 0L125.7 160z"></path>
+</svg>
+</button><button class="panzoom-max panzoom-button">
+<svg class="panzoom-icon" viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+<path d="M32 32C14.3 32 0 46.3 0 64l0 96c0 17.7 14.3 32 32 32s32-14.3 32-32l0-64 64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-64zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0 0 64c0 17.7 14.3 32 32 32s32-14.3 32-32l0-96c0-17.7-14.3-32-32-32l-96 0zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 64-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c17.7 0 32-14.3 32-32l0-96z"></path>
+</svg>
+</button><button class="panzoom-min panzoom-button panzoom-hidden">
+<svg class="panzoom-icon" viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+<path d="M160 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 64-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c17.7 0 32-14.3 32-32l0-96zM32 320c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0 0 64c0 17.7 14.3 32 32 32s32-14.3 32-32l0-96c0-17.7-14.3-32-32-32l-96 0zM352 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-64zM320 320c-17.7 0-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32s32-14.3 32-32l0-64 64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0z"></path>
+</svg>
+</button>
+</nav>
+<pre class="mermaid"><code>flowchart TD
+    subgraph UserZone["User Network Zone"]
+        User["End User"]
+    end
+
+    subgraph AppTier["Application Tier"]
+        AIZone["AI App + MCP Client"]
+        EntIdP["Enterprise Identity Platform"]
+    end
+
+    subgraph ControlledZone["Controlled Egress Zone"]
+        StripeMCP["Stripe MCP Server"]
+    end
+
+    subgraph Internet["External / Internet"]
+        StripeOAuth["Stripe OAuth
+        connect.stripe.com"]
+        StripeAPI["Stripe API
+        api.stripe.com"]
+    end
+
+    User --&gt;|HTTPS| AIZone
+    User -.-&gt;|Blocked: Direct access| StripeMCP
+    User -.-&gt;|Blocked: Cannot grant consent| StripeOAuth
+
+    AIZone --&gt;|MCP Protocol| StripeMCP
+    EntIdP &lt;--&gt;|OAuth flows| StripeOAuth
+
+    StripeMCP --&gt;|Allowed egress| StripeAPI
+    StripeMCP -.-&gt;|Blocked: Cannot complete OAuth flow| StripeOAuth
+
+    StripeAPI --&gt;|Requires OAuth token| StripeOAuth
+
+    style UserZone fill:#fef,stroke:#c9c,stroke-width:3px
+    style AppTier fill:#efe,stroke:#6a6,stroke-width:3px
+    style ControlledZone fill:#ffe,stroke:#fa0,stroke-width:3px
+    style Internet fill:#fee,stroke:#f66,stroke-width:3px
+
+    linkStyle 1,2,6 stroke:#f00,stroke-width:2px
+</code></pre>
+<div class="panzoom-info-box panzoom-info-box-bottom panzoom-hidden">
+Hold "Alt" / "Option" to enable pan &amp; zoom
+</div>
+</div>
+<figcaption><span style="white-space: pre-wrap;">Enterprise network architecture showing OAuth authentication barriers in MCP deployments.</span></figcaption>
+</figure>
+<p>Key characteristics:</p>
+<ul>
+<li><strong>Centralised token acquisition</strong>: One system handles OAuth complexity</li>
+<li><strong>Token propagation</strong>: Internal services receive pre-acquired tokens</li>
+<li><strong>Network isolation</strong>: Internal services AND users often can't reach external OAuth providers</li>
+<li><strong>Audit trails</strong>: Maintained at both identity and service layers</li>
+</ul>
+<p>This isn't exotic; it's how AWS IAM, Google Cloud IAP, Azure AD, and virtually every enterprise identity system works.</p>
+<h2 id="the-emerging-direction-url-mode-elicitation">The Emerging Direction: URL Mode Elicitation<a class="headerlink" href="#the-emerging-direction-url-mode-elicitation" title="Permanent link">¶</a></h2>
+<p>Recent developments (<a href="https://github.com/modelcontextprotocol/modelcontextprotocol/pull/887">PR #887</a>, merged into 'draft' spec) introduce URL mode elicitation as a proposed approach:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Server rejects caller's token and returns:</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="nx">elicitationId</span><span class="o">:</span><span class="w"> </span><span class="s2">"abc123"</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">loginUrl</span><span class="o">:</span><span class="w"> </span><span class="s2">"https://provider.com/oauth/authorize"</span>
+<span class="p">}</span>
+<span class="c1">// Server must then handle OAuth redirect...</span>
+</code></pre></div>
+<p>Whilst this could work for interactive, browser-based scenarios where you have control and network access, it presents significant challenges:</p>
+<h3 id="the-non-interactive-problem">The Non-Interactive Problem<a class="headerlink" href="#the-non-interactive-problem" title="Permanent link">¶</a></h3>
+<p>Many MCP use cases are autonomous:</p>
+<ul>
+<li>CI/CD pipelines triggering on commits</li>
+<li>Scheduled data synchronisation jobs</li>
+<li>Background analysis tasks</li>
+<li>Agent-to-agent communication</li>
+</ul>
+<p>None of these can "open a browser" for authentication.</p>
+<h3 id="the-network-topology-challenge">The Network Topology Challenge<a class="headerlink" href="#the-network-topology-challenge" title="Permanent link">¶</a></h3>
+<p>Enterprise networks typically isolate both internal services and users:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">internal_environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">services</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">internet_access</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># Security requirement</span>
+<span class="w">    </span><span class="nt">oauth_endpoints</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blocked</span>
+<span class="w">  </span><span class="nt">users</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">external_sites</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restricted</span><span class="w">  </span><span class="c1"># Often blocked by policy</span>
+<span class="w">    </span><span class="nt">approved_domains</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">limited</span>
+</code></pre></div>
+<p>Requiring OAuth flows at the MCP server level breaks this model.</p>
+<h3 id="the-complexity-multiplication">The Complexity Multiplication<a class="headerlink" href="#the-complexity-multiplication" title="Permanent link">¶</a></h3>
+<p>If this pattern becomes standard, every MCP server would need to:</p>
+<ul>
+<li>Implement OAuth client logic</li>
+<li>Manage HTTPS endpoints for callbacks</li>
+<li>Handle state correlation and PKCE</li>
+<li>Implement token refresh logic</li>
+<li>Ensure security compliance (CSRF protection, secure storage)</li>
+<li>Meet regulatory requirements (data residency, audit logging)</li>
+</ul>
+<p>This isn't just about OAuth; it's about each server becoming responsible for security, storage, compliance, and identity management. The "extremely easy to build" principle becomes "implement a complete identity system in every server."</p>
+<h2 id="the-pattern-of-dismissal">The Pattern of Dismissal<a class="headerlink" href="#the-pattern-of-dismissal" title="Permanent link">¶</a></h2>
+<p>This isn't the first time these concerns have been raised. The GitHub discussions are littered with proposals that identified and tried to solve this exact problem:</p>
+<ul>
+<li>
+<p><strong>Discussion <a href="https://github.com/modelcontextprotocol/modelcontextprotocol/discussions/193">#193</a></strong> proposed multi-tenant client support, noting the inefficiency of spinning up separate processes per user. The response? <em>"Create unique instances of MCP servers."</em> </p>
+</li>
+<li>
+<p><strong>Discussion <a href="https://github.com/modelcontextprotocol/modelcontextprotocol/discussions/234">#234</a></strong> (by @wdawson) proposed exactly what enterprises need: passing user tokens at the tool level to enable multi-user scenarios. It was closed after URL mode was merged, despite URL mode not addressing the core concerns.</p>
+</li>
+<li>
+<p><strong>Issue <a href="https://github.com/modelcontextprotocol/modelcontextprotocol/issues/">#195</a></strong> suggested using standard WWW-Authenticate headers and allowing clients to pass tokens directly. Sixteen developers agreed. No action taken.</p>
+</li>
+<li>
+<p><strong>Discussion <a href="https://github.com/modelcontextprotocol/modelcontextprotocol/discussions/804">#804</a></strong> proposed a gateway-based model that would work with enterprise architectures. Still under discussion, likely to be superseded by URL mode.</p>
+</li>
+</ul>
+<p>Even a collaborator (@pwwpche) acknowledged the reality: </p>
+<blockquote>
+<p>"An OAuth based MCP Server is a bit too heavy... enterprises would find it hard to implement an extra OAuth layer."</p>
+</blockquote>
+<p>The community has repeatedly identified the problem. The solutions have been proposed. But the dogmatic rejection of token passthrough means they can't be considered.</p>
+<h2 id="examining-the-security-rationale">Examining the Security Rationale<a class="headerlink" href="#examining-the-security-rationale" title="Permanent link">¶</a></h2>
+<p>The MCP security guidance presents concerns about token handling. However, there's a disconnect between identified risks and proposed solutions.</p>
+<h3 id="the-validated-passthrough-pattern">The Validated Passthrough Pattern<a class="headerlink" href="#the-validated-passthrough-pattern" title="Permanent link">¶</a></h3>
+<p>Consider how API gateways, service meshes, and identity-aware proxies work:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">handle_request</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+    <span class="c1"># Validate token properties</span>
+    <span class="n">claims</span> <span class="o">=</span> <span class="n">validate_token</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> 
+        <span class="n">expected_issuer</span><span class="o">=</span><span class="s2">"corp.identity.provider"</span><span class="p">,</span>
+        <span class="n">expected_audience</span><span class="o">=</span><span class="s2">"upstream.api"</span><span class="p">,</span>
+        <span class="n">check_expiry</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Forward validated token to upstream</span>
+    <span class="n">upstream_response</span> <span class="o">=</span> <span class="n">call_upstream_api</span><span class="p">(</span>
+        <span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">,</span>
+        <span class="n">auth_header</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Bearer </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">upstream_response</span>
+</code></pre></div>
+<p>This pattern, validated passthrough; is industry standard. It appears in:</p>
+<ul>
+<li>AWS API Gateway</li>
+<li>Google Cloud Endpoints</li>
+<li>Azure API Management</li>
+<li>Kong, Traefik, Envoy</li>
+<li>Every major service mesh</li>
+</ul>
+<p>The security comes from <strong>validation</strong>, not from preventing passthrough.</p>
+<h3 id="trust-boundaries-and-reality">Trust Boundaries and Reality<a class="headerlink" href="#trust-boundaries-and-reality" title="Permanent link">¶</a></h3>
+<p>The current guidance suggests MCP servers can't be trusted with tokens, yet consider the trust already placed in the system: </p>
+<p><strong>MCP Clients</strong> (typically part of the AI application's infrastructure): </p>
+<ul>
+<li>Handle all user prompts before forwarding</li>
+<li>Orchestrate tool calls with sensitive parameters - Receive and process all responses </li>
+<li>Are trusted as part of the host application's security boundary </li>
+</ul>
+<p><strong>MCP Servers</strong>:</p>
+<ul>
+<li>Process those same prompts via tool calls</li>
+<li>Execute operations with user data</li>
+<li>Return results containing confidential information </li>
+</ul>
+<p>Both clients and servers must be equally trusted with data. If we trust them with user information, why not with scoped, time-limited tokens meant for upstream APIs?</p>
+<h2 id="a-pragmatic-path-forward">A Pragmatic Path Forward<a class="headerlink" href="#a-pragmatic-path-forward" title="Permanent link">¶</a></h2>
+<p>Rather than forcing every MCP server to become an OAuth client, consider standardising identity propagation:</p>
+<h3 id="the-conceptual-approach">The Conceptual Approach<a class="headerlink" href="#the-conceptual-approach" title="Permanent link">¶</a></h3>
+<p>The solution involves adding an optional <code>upstream_identity</code> field to MCP requests:</p>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">UpstreamIdentityPayload</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kr">type</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">        </span><span class="c1">// "bearer", "basic", etc. (RFC 7235)</span>
+<span class="w">  </span><span class="nx">token</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">;</span><span class="w">       </span><span class="c1">// The actual credential</span>
+<span class="w">  </span><span class="p">[</span><span class="nx">key</span><span class="o">:</span><span class="w"> </span><span class="kt">string</span><span class="p">]</span><span class="o">:</span><span class="w"> </span><span class="nx">unknown</span><span class="p">;</span><span class="w">  </span><span class="c1">// Extensible for additional context</span>
+<span class="p">}</span>
+
+<span class="k">export</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">RequestParams</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="c1">// Existing fields...</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Optional, per-request credentials for upstream APIs.</span>
+<span class="cm">   * This field provides a standard mechanism for Identity Propagation.</span>
+<span class="cm">   * The server simply validates and forwards to the upstream API.</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="nx">upstream_identity?</span><span class="o">:</span><span class="w"> </span><span class="kt">UpstreamIdentityPayload</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This approach:</p>
+<ul>
+<li><strong>Preserves simplicity</strong>: Servers just validate and forward</li>
+<li><strong>Enables multi-tenancy</strong>: One instance, multiple users</li>
+<li><strong>Aligns with enterprise patterns</strong>: Tokens from central identity</li>
+<li><strong>Supports all environments</strong>: Works without browsers or internet</li>
+<li><strong>Maintains security</strong>: Full validation without OAuth complexity</li>
+</ul>
+<p><em>(A <a href="https://github.com/modelcontextprotocol/modelcontextprotocol/discussions/1827">detailed technical proposal</a> explores the complete specification, including session-level patterns and implementation guidance.)</em></p>
+<h2 id="the-broader-pattern">The Broader Pattern<a class="headerlink" href="#the-broader-pattern" title="Permanent link">¶</a></h2>
+<p>This situation reflects a recurring challenge in protocol design: the tension between theoretical purity and operational reality.</p>
+<p>MCP's core protocol succeeds because it embraces simplicity. The authentication challenges arise where that principle gives way to prescriptive security guidance that doesn't align with how systems actually work.</p>
+<p>When official implementations unanimously diverge from stated best practices, it suggests the practices—not the implementations—need reconsideration.</p>
+<h2 id="moving-forward">Moving Forward<a class="headerlink" href="#moving-forward" title="Permanent link">¶</a></h2>
+<p>MCP has tremendous potential to standardise LLM-to-system integration. The protocol foundation is solid. The tools system is well-designed. But authentication needs pragmatic solutions that acknowledge:</p>
+<ol>
+<li><strong>Enterprise networks</strong> have established patterns for identity propagation</li>
+<li><strong>Multi-tenancy</strong> requires identity at the request level, not instance level</li>
+<li><strong>Simplicity</strong> means not reimplementing OAuth in every server</li>
+<li><strong>Security</strong> comes from proper validation, not architectural constraints</li>
+</ol>
+<h2 id="a-question-worth-answering">A Question Worth Answering<a class="headerlink" href="#a-question-worth-answering" title="Permanent link">¶</a></h2>
+<p>If MCP servers are trusted with user data but not with bearer tokens, what threat model justifies this distinction?</p>
+<p>And if the answer is "defence in depth"—shouldn't we apply that principle by enabling secure patterns that people will actually use, rather than forcing complex ones they'll work around?</p>
+<hr/>
+<p><em>The author is a Staff Engineer at Mozilla.ai, creator of <a href="https://github.com/mozilla-ai/mcpd">mcpd</a>, with extensive experience in enterprise authentication systems including work at HashiCorp on Vault and major financial institutions. This analysis is based on public specifications, official implementations, and established industry patterns.</em></p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      All views and opinions expressed on this site are my own and do not represent the views of my employer or any organizations I am affiliated with.
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+<script src="../../../../../assets/javascripts/panzoom.min.js"></script>
+<script src="../../../../../assets/javascripts/zoompan.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+window.mermaidConfig = {default: {
+    startOnLoad: false
+}};</script></body>
+</html>
