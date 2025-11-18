@@ -319,4 +319,4 @@ And if the answer is "defence in depth"—shouldn't we apply that principle by e
 
 ------
 
-*The author is a Staff Engineer at Mozilla.ai, creator of [mcpd](https://github.com/mozilla-ai/mcpd), with extensive experience in enterprise authentication systems including work at HashiCorp on Vault and major financial institutions. This analysis is based on public specifications, official implementations, and established industry patterns.*
+*This analysis is based on public specifications, official implementations, and established industry patterns.*
