@@ -3,6 +3,7 @@ date: 2025-11-17
 authors:
   - peteski
 categories:
+  - AI
   - Architecture
   - Identity
   - MCP
