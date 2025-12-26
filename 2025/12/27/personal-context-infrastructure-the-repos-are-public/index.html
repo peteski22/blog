@@ -10,13 +10,11 @@
       
       
       
-        <link rel="canonical" href="https://peteski22.github.io/blog/2025/12/18/why-im-building-toward-sovereign-ai/">
+        <link rel="canonical" href="https://peteski22.github.io/blog/2025/12/27/personal-context-infrastructure-the-repos-are-public/">
       
       
-        <link rel="prev" href="../../../11/17/mcps-identity-crisis-when-security-theatre-meets-enterprise-reality/">
+        <link rel="prev" href="../../18/why-im-building-toward-sovereign-ai/">
       
-      
-        <link rel="next" href="../../27/personal-context-infrastructure-the-repos-are-public/">
       
       
         
@@ -27,7 +25,7 @@
     
     
       
-        <title>Why I'm Building Toward Sovereign AI - Technical Blog</title>
+        <title>Personal Context Infrastructure: The Repos Are Public - Technical Blog</title>
       
     
     
@@ -81,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#why-im-building-toward-sovereign-ai" class="md-skip">
+        <a href="#personal-context-infrastructure-the-repos-are-public" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Why I'm Building Toward Sovereign AI
+              Personal Context Infrastructure: The Repos Are Public
             
           </span>
         </div>
@@ -653,10 +651,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-problem" class="md-nav__link">
+  <a href="#the-architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Problem
+        The Architecture
       
     </span>
   </a>
@@ -664,10 +662,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-concept-personal-context-infrastructure" class="md-nav__link">
+  <a href="#supporting-repositories" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Concept: Personal Context Infrastructure
+        Supporting Repositories
       
     </span>
   </a>
@@ -675,10 +673,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-this-matters-for-ai" class="md-nav__link">
+  <a href="#current-state" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why This Matters for AI
+        Current State
       
     </span>
   </a>
@@ -686,10 +684,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-im-building" class="md-nav__link">
+  <a href="#why-open-source" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What I'm Building
+        Why Open Source?
       
     </span>
   </a>
@@ -697,10 +695,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-bother" class="md-nav__link">
+  <a href="#get-involved" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why Bother?
+        Get Involved
       
     </span>
   </a>
@@ -763,7 +761,7 @@
                     <li class="md-nav__item">
                       <div class="md-nav__link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
-                        <time datetime="2025-12-18 00:00:00+00:00" class="md-ellipsis">December 18, 2025</time>
+                        <time datetime="2025-12-27 00:00:00+00:00" class="md-ellipsis">December 27, 2025</time>
                       </div>
                     </li>
                     
@@ -776,7 +774,8 @@
                             
                               <a href="../../../../category/ai/">AI</a>, 
                               <a href="../../../../category/architecture/">Architecture</a>, 
-                              <a href="../../../../category/privacy/">Privacy</a></span>
+                              <a href="../../../../category/privacy/">Privacy</a>, 
+                              <a href="../../../../category/open-source/">Open Source</a></span>
                         </div>
                       </li>
                     
@@ -811,39 +810,48 @@
 
 
 
-<h1 id="why-im-building-toward-sovereign-ai">Why I'm Building Toward Sovereign AI<a class="headerlink" href="#why-im-building-toward-sovereign-ai" title="Permanent link">&para;</a></h1>
-<p>I've been spending evenings and weekends on something that might sound idealistic: infrastructure for personal data sovereignty. But I'm not building it because I think it'll definitely work. I'm building it because the alternative - doing nothing - seems worse.</p>
+<h1 id="personal-context-infrastructure-the-repos-are-public">Personal Context Infrastructure: The Repos Are Public<a class="headerlink" href="#personal-context-infrastructure-the-repos-are-public" title="Permanent link">&para;</a></h1>
+<p>Last week I wrote about building toward sovereign AI - infrastructure that keeps your data local while letting AI actually help you. Today the repositories are public. Here's what's in them...</p>
 <!-- more -->
 
-<h2 id="the-problem">The Problem<a class="headerlink" href="#the-problem" title="Permanent link">&para;</a></h2>
-<p>The AI industry runs on a surveillance economy. Your context - browsing history, messages, photos, location patterns, the texture of your daily life - gets harvested, aggregated, and used to train models. You're an unpaid data labourer for systems that may eventually replace you.</p>
-<p>This isn't a conspiracy theory. It's the business model. "Free" services aren't free; you pay with your data, and that data has real value. Some economists call this technofeudalism - platforms extracting rent from users who can't meaningfully opt out. They use your context to build AI that serves their interests, not yours. And their interests are straightforward: returns for shareholders, leverage for owners.</p>
-<h2 id="the-concept-personal-context-infrastructure">The Concept: Personal Context Infrastructure<a class="headerlink" href="#the-concept-personal-context-infrastructure" title="Permanent link">&para;</a></h2>
-<p>I've been working to advance Personal Context Infrastructure (PCI), a concept introduced by Jad Esber and Apurva Chitnis at <a href="https://blog.koodos.com/p/personal-context-infrastructure">koodos</a>. The idea: a local-first architecture where your data stays on your devices.</p>
-<p>The core ideas:</p>
-<p><strong>Local-first storage.</strong> Your data lives encrypted on devices you control, synced via CRDTs (using Yjs). No cloud service holds the plaintext.</p>
-<p><strong>Local AI processing.</strong> Small language models (Phi-3, Llama, Mistral) run on-device. Your AI assistant can actually know you - your notes, your preferences, your history - without any of that leaking to external services.</p>
-<p><strong>Zero-knowledge verification.</strong> When services need to verify something about you (age, credentials, income threshold), ZKPs provide the answer without revealing underlying data. You can't train on what you never received. Midnight's privacy-preserving blockchain handles this layer.</p>
-<p><strong>Cryptographic policy enforcement.</strong> User preferences are expressed in S-PAL (Sovereign Privacy &amp; Access Language) - machine-readable policies that smart contracts on Cardano enforce. If your policy says "no access," the transaction fails mathematically. Yes, it's crypto - but proof-of-stake uses less energy than the AI training runs it's designed to constrain, and this is the utility critics always say blockchain should have.</p>
-<p><strong>Community infrastructure.</strong> Between "run your own server" (too hard) and "trust Big Tech" (defeats the purpose) lies a middle path: community organisations - libraries, co-ops, local tech groups - running sovereignty infrastructure for their members.</p>
-<h2 id="why-this-matters-for-ai">Why This Matters for AI<a class="headerlink" href="#why-this-matters-for-ai" title="Permanent link">&para;</a></h2>
-<p>The current trajectory has AI companies hoovering up everything to train ever-larger models. But there's another path: AI that comes to your data instead of your data going to their models.</p>
-<p>Small models are getting remarkably capable. An iPhone can run a 3B parameter model locally. WebAssembly brings inference to browsers. The "you need massive scale" argument is weakening.</p>
-<p>Sovereign AI means your personal assistant actually works for you. It has context about your life because it runs locally against your encrypted data - not because some company harvested that context and might use it against your interests.</p>
-<h2 id="what-im-building">What I'm Building<a class="headerlink" href="#what-im-building" title="Permanent link">&para;</a></h2>
-<p>I've been documenting the architecture and building initial implementations:</p>
+<h2 id="the-architecture">The Architecture<a class="headerlink" href="#the-architecture" title="Permanent link">&para;</a></h2>
+<p>PCI has five layers, each with its own repository:</p>
+<p><strong>Layer 1: Context Store</strong> (<a href="https://github.com/peteski22/pci-context-store">pci-context-store</a>)
+Encrypted local storage using AES-256-GCM. Your data stays on your devices, synced via CRDTs when you have multiple. Vector embeddings via sqlite-vec enable semantic search over your personal context. Also caches ZKPs for reuse across services. Nothing leaves your device unless you want it to.</p>
+<p><strong>Layer 2: Personal Agent</strong> (<a href="https://github.com/peteski22/pci-agent">pci-agent</a>)
+Runs small language models locally - Phi-3, Llama, Mistral, whatever fits your hardware. The agent queries your encrypted context store and enforces policies before responding. Your AI assistant actually runs on your machine.</p>
+<p><strong>Layer 3: Smart Contracts</strong> (<a href="https://github.com/peteski22/pci-contracts">pci-contracts</a>)
+Cardano contracts that flip who sets the terms. You define the policy; requesters agree to it or don't get access. The opposite of clicking "I agree" on terms you didn't write. Commitments are recorded on-chain - doesn't prevent future misuse, but makes it provable.</p>
+<p><strong>Layer 4: Zero-Knowledge Proofs</strong> (<a href="https://github.com/peteski22/pci-zkp">pci-zkp</a>)
+Midnight integration for verification without disclosure. Prove you're over 18 without revealing your birthdate. Prove you have a credential without exposing which one. Proofs are cached and reusable - verify once, use many times without paying repeatedly. Services get the answer they need; you keep the data they don't.</p>
+<p><strong>Layer 5: Identity</strong> (<a href="https://github.com/peteski22/pci-identity">pci-identity</a>)
+DID management with ephemeral identities per interaction. No cross-service tracking. Each service sees a different you, unlinkable to your others. But you can prove linkage to your root identity when needed - for legal claims or if law enforcement requires it.</p>
+<h2 id="supporting-repositories">Supporting Repositories<a class="headerlink" href="#supporting-repositories" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Encrypted context storage using battle-tested CRDTs</li>
-<li>Identity management with ephemeral DIDs to prevent tracking</li>
-<li>Zero-knowledge proof services for verification without disclosure</li>
-<li>Smart contracts for policy enforcement</li>
-<li>Agent coordination layer</li>
-<li>Infrastructure tooling and specifications</li>
+<li><a href="https://github.com/peteski22/pci-spec">pci-spec</a> - S-PAL schema definitions and protocol specifications</li>
+<li><a href="https://github.com/peteski22/pci-docs">pci-docs</a> - Architecture documentation and concept explanations</li>
+<li><a href="https://github.com/peteski22/pci-infra">pci-infra</a> - Docker Compose configurations for local development</li>
 </ul>
-<p>It's early. The repos aren't public yet. But the design documents are taking shape, and the pieces are starting to connect.</p>
-<h2 id="why-bother">Why Bother?<a class="headerlink" href="#why-bother" title="Permanent link">&para;</a></h2>
-<p>I'm not certain this will succeed. But I'm certain that if we all shrug and accept surveillance as inevitable, it becomes inevitable. The technology for a different path exists. Someone has to build it.</p>
-<p>If you're interested in data sovereignty, local-first architecture, or AI that actually serves users - I'll be sharing more as this develops.</p>
+<h2 id="current-state">Current State<a class="headerlink" href="#current-state" title="Permanent link">&para;</a></h2>
+<p>The project is in the very early stages. There are initial implementations for some pieces - encryption, vector storage, DID generation, contract structure - but plenty of GitHub issues waiting to be tackled. This is scaffolding, not a finished building.</p>
+<p>What's in place:
+- AES-256-GCM encryption with PBKDF2 key derivation
+- SQLite persistence with sqlite-vec for vector search
+- DID generation and management (did:key method)
+- Cardano smart contract validators (currently using Aiken)
+- TypeScript SDK for ZKP service integration</p>
+<p>What's coming:
+- Y.js CRDT sync across devices
+- Local embedding model integration
+- Full Midnight testnet deployment
+- Community node infrastructure</p>
+<h2 id="why-open-source">Why Open Source?<a class="headerlink" href="#why-open-source" title="Permanent link">&para;</a></h2>
+<p>The whole point of data sovereignty is that you don't have to trust anyone. Open source means you can verify. You can run it yourself. You can modify it. If I disappear tomorrow, the code still exists.</p>
+<p>Also: I can't build this alone. The intersection of local-first storage, small language models, zero-knowledge proofs, and smart contracts is genuinely hard. If this idea resonates with you, contributions are welcome.</p>
+<h2 id="get-involved">Get Involved<a class="headerlink" href="#get-involved" title="Permanent link">&para;</a></h2>
+<p>If any of this sounds interesting, have a poke around. The <a href="https://github.com/peteski22/pci-spec">pci-spec</a> repo has the S-PAL specification if you want to understand the policy language, and <a href="https://github.com/peteski22/pci-docs">pci-docs</a> explains how the layers fit together.</p>
+<p>I'd genuinely like this to be a community effort rather than a solo project. If you're into encrypted storage, local AI, ZKPs, Cardano, or just the broader data sovereignty question - open an issue, submit a PR, or just say hello. If there's enough interest I'll turn on GitHub Discussions so we have somewhere to chat that isn't issue trackers.</p>
+<p>Remember when you could buy something without handing over your life story? The corner shop model: you pay, you get the thing, transaction done. No loyalty card, no account, no "personalised experience" that's really just a profile being built on you. That's what we're trying to bring back - but for the AI era.</p>
 
 
 
