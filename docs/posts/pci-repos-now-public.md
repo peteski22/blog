@@ -39,6 +39,7 @@ DID management with ephemeral identities per interaction. No cross-service track
 - [pci-spec](https://github.com/peteski22/pci-spec) - S-PAL schema definitions and protocol specifications
 - [pci-docs](https://github.com/peteski22/pci-docs) - Architecture documentation and concept explanations
 - [pci-infra](https://github.com/peteski22/pci-infra) - Docker Compose configurations for local development
+- [pci-demo](https://github.com/peteski22/pci-demo) - Demo applications showing the stack in action
 
 ## Current State
 
