@@ -2,66 +2,70 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://peteski22.github.io/blog/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-22</lastmod>
     </url>
     <url>
          <loc>https://peteski22.github.io/blog/about/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-22</lastmod>
     </url>
     <url>
          <loc>https://peteski22.github.io/blog/2026/02/04/ai-growth-zones-gift-horse-or-trojan-horse/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-22</lastmod>
     </url>
     <url>
          <loc>https://peteski22.github.io/blog/2025/12/18/why-im-building-toward-sovereign-ai/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-22</lastmod>
     </url>
     <url>
          <loc>https://peteski22.github.io/blog/2025/11/17/mcps-identity-crisis-when-security-theatre-meets-enterprise-reality/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-22</lastmod>
     </url>
     <url>
          <loc>https://peteski22.github.io/blog/2025/12/27/personal-context-infrastructure-the-repos-are-public/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-22</lastmod>
+    </url>
+    <url>
+         <loc>https://peteski22.github.io/blog/2026/02/22/the-star-chamber-multi-llm-consensus-for-code-quality/</loc>
+         <lastmod>2026-02-22</lastmod>
     </url>
     <url>
          <loc>https://peteski22.github.io/blog/archive/2026/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-22</lastmod>
     </url>
     <url>
          <loc>https://peteski22.github.io/blog/archive/2025/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-22</lastmod>
     </url>
     <url>
          <loc>https://peteski22.github.io/blog/category/ai/</loc>
-         <lastmod>2026-02-04</lastmod>
-    </url>
-    <url>
-         <loc>https://peteski22.github.io/blog/category/infrastructure/</loc>
-         <lastmod>2026-02-04</lastmod>
-    </url>
-    <url>
-         <loc>https://peteski22.github.io/blog/category/policy/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-22</lastmod>
     </url>
     <url>
          <loc>https://peteski22.github.io/blog/category/architecture/</loc>
-         <lastmod>2026-02-04</lastmod>
-    </url>
-    <url>
-         <loc>https://peteski22.github.io/blog/category/privacy/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-22</lastmod>
     </url>
     <url>
          <loc>https://peteski22.github.io/blog/category/open-source/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-22</lastmod>
+    </url>
+    <url>
+         <loc>https://peteski22.github.io/blog/category/infrastructure/</loc>
+         <lastmod>2026-02-22</lastmod>
+    </url>
+    <url>
+         <loc>https://peteski22.github.io/blog/category/policy/</loc>
+         <lastmod>2026-02-22</lastmod>
+    </url>
+    <url>
+         <loc>https://peteski22.github.io/blog/category/privacy/</loc>
+         <lastmod>2026-02-22</lastmod>
     </url>
     <url>
          <loc>https://peteski22.github.io/blog/category/identity/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-22</lastmod>
     </url>
     <url>
          <loc>https://peteski22.github.io/blog/category/mcp/</loc>
-         <lastmod>2026-02-04</lastmod>
+         <lastmod>2026-02-22</lastmod>
     </url>
 </urlset>

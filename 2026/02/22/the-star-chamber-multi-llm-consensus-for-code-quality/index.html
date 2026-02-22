@@ -1,0 +1,872 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Thoughts on distributed systems, authentication, and protocol design" name="description"/>
+<link href="https://peteski22.github.io/blog/2026/02/22/the-star-chamber-multi-llm-consensus-for-code-quality/" rel="canonical"/>
+<link href="../../04/ai-growth-zones-gift-horse-or-trojan-horse/" rel="prev"/>
+<link href="../../../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.0" name="generator"/>
+<title>The Star Chamber: Multi-LLM Consensus for Code Quality - Technical Blog</title>
+<link href="../../../../assets/stylesheets/main.618322db.min.css" rel="stylesheet"/>
+<link href="../../../../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../../../assets/stylesheets/panzoom.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+<meta name="panzoom-theme" content="material">
+<meta name="panzoom-data" content='{"selectors": [".d2", ".mermaid"], "initial_zoom_level": 1.0}'> </head>
+<body data-md-color-accent="indigo" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#the-star-chamber-multi-llm-consensus-for-code-quality">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Technical Blog" class="md-header__button md-logo" data-md-component="logo" href="../../../.." title="Technical Blog">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Technical Blog
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              The Star Chamber: Multi-LLM Consensus for Code Quality
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="" data-md-color-primary="indigo" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="indigo" data-md-color-media="" data-md-color-primary="indigo" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden="">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Technical Blog" class="md-nav__button md-logo" data-md-component="logo" href="../../../.." title="Technical Blog">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Technical Blog
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<a class="md-nav__link" href="../../../..">
+<span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../about/">
+<span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../archive/2026/">
+<span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../archive/2025/">
+<span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Categories
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Categories
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../category/ai/">
+<span class="md-ellipsis">
+    
+  
+    AI
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../category/architecture/">
+<span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../category/identity/">
+<span class="md-ellipsis">
+    
+  
+    Identity
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../category/infrastructure/">
+<span class="md-ellipsis">
+    
+  
+    Infrastructure
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../category/mcp/">
+<span class="md-ellipsis">
+    
+  
+    MCP
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../category/open-source/">
+<span class="md-ellipsis">
+    
+  
+    Open Source
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../category/policy/">
+<span class="md-ellipsis">
+    
+  
+    Policy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../../category/privacy/">
+<span class="md-ellipsis">
+    
+  
+    Privacy
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-problem-with-single-model-review">
+<span class="md-ellipsis">
+      
+        The Problem with Single-Model Review
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#claude-pragma-the-bigger-picture">
+<span class="md-ellipsis">
+      
+        claude-pragma: The Bigger Picture
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#how-the-star-chamber-works">
+<span class="md-ellipsis">
+      
+        How the Star Chamber Works
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#two-modes-parallel-and-debate">
+<span class="md-ellipsis">
+      
+        Two Modes: Parallel and Debate
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#an-example-the-star-chamber-reviews-itself">
+<span class="md-ellipsis">
+      
+        An Example: The Star Chamber Reviews Itself
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#design-questions-not-just-code-review">
+<span class="md-ellipsis">
+      
+        Design Questions, Not Just Code Review
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#where-this-fits-in-the-pipeline">
+<span class="md-ellipsis">
+      
+        Where This Fits in the Pipeline
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-plumbing">
+<span class="md-ellipsis">
+      
+        The Plumbing
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation-perplexitys-model-council">
+<span class="md-ellipsis">
+      
+        Validation: Perplexity's Model Council
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-this-works">
+<span class="md-ellipsis">
+      
+        Why This Works
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-ive-learned-using-it">
+<span class="md-ellipsis">
+      
+        What I've Learned Using It
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#whats-next">
+<span class="md-ellipsis">
+      
+        What's Next
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#try-it">
+<span class="md-ellipsis">
+      
+        Try It
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content md-content--post" data-md-component="content">
+<div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner md-post">
+<nav class="md-nav md-nav--primary">
+<div class="md-post__back">
+<div class="md-nav__title md-nav__container">
+<a class="md-nav__link" href="../../../..">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+<span class="md-ellipsis">
+                    Back to index
+                  </span>
+</a>
+</div>
+</div>
+<div class="md-post__authors md-typeset">
+<div class="md-profile md-post__profile">
+<span class="md-author md-author--long">
+<img alt="Peter Wilson" src="https://github.com/peteski22.png"/>
+</span>
+<span class="md-profile__description">
+<strong>
+                        
+                          Peter Wilson
+                        
+                      </strong>
+<br/>
+                      Staff Engineer
+                    </span>
+</div>
+</div>
+<ul class="md-post__meta md-nav__list">
+<li class="md-nav__item md-nav__item--section">
+<div class="md-post__title">
+<span class="md-ellipsis">
+                    Metadata
+                  </span>
+</div>
+<nav class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<div class="md-nav__link">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"></path></svg>
+<time class="md-ellipsis" datetime="2026-02-22 00:00:00+00:00">February 22, 2026</time>
+</div>
+</li>
+<li class="md-nav__item">
+<div class="md-nav__link">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"></path></svg>
+<span class="md-ellipsis">
+                            in
+                            
+                              <a href="../../../../category/ai/">AI</a>, 
+                              <a href="../../../../category/architecture/">Architecture</a>, 
+                              <a href="../../../../category/open-source/">Open Source</a></span>
+</div>
+</li>
+<li class="md-nav__item">
+<div class="md-nav__link">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"></path></svg>
+<span class="md-ellipsis">
+                            
+                              12 min read
+                            
+                          </span>
+</div>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<article class="md-content__inner md-typeset">
+<h1 id="the-star-chamber-multi-llm-consensus-for-code-quality">The Star Chamber: Multi-LLM Consensus for Code Quality<a class="headerlink" href="#the-star-chamber-multi-llm-consensus-for-code-quality" title="Permanent link">¶</a></h1>
+<p>Every AI model has blind spots. It might overlook context, lean toward certain patterns, or fill gaps with confident guesses. When you're using an AI coding agent to help with architecture decisions or code review, you're getting one perspective from one model. That's fine for straightforward work. But for decisions that shape the long-term direction of a codebase, one perspective isn't enough.</p>
+<p>The Star Chamber is a <a href="https://docs.anthropic.com/en/docs/claude-code/skills">skill</a> for <a href="https://docs.anthropic.com/en/docs/claude-code/overview">Claude Code</a> that fans out code reviews and design questions to multiple LLM providers simultaneously, aggregates their feedback, and presents consensus-based recommendations. Think of it as a senior engineering council that reviews the same code independently, then you get a summary of where they agree and where they don't.</p>
+<!-- more -->
+<p>The name is a nod to <a href="https://www.linkedin.com/in/innovativecio/">Mark Schwartz's</a> <a href="https://itrevolution.com/product/a-seat-at-the-table/">A Seat at the Table</a>, where he talks about the "Star Chamber" when describing the governance review board that oversees IT decisions. Schwartz argues that these boards should focus on outcomes and confidence rather than wading through planning documents or ceremony that were never really what they needed. It has stuck with me for years, and so the Star Chamber here is the same idea applied to code: A panel that gives you confidence in decisions through a structured, multi-perspective review. His books are definitely worth checking out, particularly <a href="https://itrevolution.com/product/a-seat-at-the-table/">A Seat at the Table</a> and <a href="https://itrevolution.com/product/the-delicate-art-of-bureaucracy/">The (Delicate) Art of Bureaucracy</a>.</p>
+<p>The original <a href="https://en.wikipedia.org/wiki/Star_Chamber">Star Chamber</a> was a 15th-17th century English court at the Palace of Westminster, a council of privy councillors and common-law judges established to handle cases too significant for ordinary courts. A panel of independent reviewers, each bringing different expertise, deliberating on the same evidence.</p>
+<p>The Star Chamber is part of a broader project called <a href="https://github.com/peteski22/claude-pragma">claude-pragma</a>, which I'll come back to shortly.</p>
+<h2 id="the-problem-with-single-model-review">The Problem with Single-Model Review<a class="headerlink" href="#the-problem-with-single-model-review" title="Permanent link">¶</a></h2>
+<p>If you've worked with AI coding agents, or even indulged in browser-based LLM chats for coding questions, you'll recognise this pattern:</p>
+<ol>
+<li>Ask Claude a question, get an answer</li>
+<li>Your experience tells you something else, so open ChatGPT and pit it against Claude's response</li>
+<li>Take that answer, paste it into Gemini to play devil's advocate one more time</li>
+<li>Mentally synthesise the results, weigh them up, decide what to do</li>
+<li>Repeat next time you have a question</li>
+</ol>
+<p>It works, but attrition is the killer. After a few rounds of copy-pasting between tabs, "good enough" starts to feel like a reasonable answer and the rigour quietly drops off.</p>
+<p>And each model notices different things, or has a style of writing code, or uses a particular version of a language it was trained heavily on. Claude might catch architectural concerns but miss performance implications. GPT might flag security issues but overlook idiomatic patterns. Gemini might spot documentation gaps but be less opinionated about error handling.</p>
+<p>None of them are wrong. They're just different. And in a real engineering team, you'd want multiple reviewers precisely because different people notice different things.</p>
+<p>In a remote-first world, there's also a practical angle. You don't always want to interrupt a colleague to rubber duck a design question or get a second opinion on an approach. That kind of collaboration is valuable and I'd never want to replace it, but something like the Star Chamber can handle the low-hanging fruit: the quick sanity checks, the "am I overthinking this?" moments. It means when you do pull someone in for a pairing session or a deeper discussion, you're bringing a sharper, better-tested starting point.</p>
+<p>So the question became: what if that whole process of consulting multiple models and synthesising their views could be automated in a constructive way?</p>
+<h2 id="claude-pragma-the-bigger-picture"><code>claude-pragma</code>: The Bigger Picture<a class="headerlink" href="#claude-pragma-the-bigger-picture" title="Permanent link">¶</a></h2>
+<p>Before diving into the Star Chamber, it's worth understanding the project it belongs to...</p>
+<p><a href="https://github.com/peteski22/claude-pragma">claude-pragma</a> is a collection of skills, agents, and validators for Claude Code that aim to make working with Claude more deterministic.</p>
+<p>The core problem: Claude Code's rules (defined in <code>CLAUDE.md</code> files) are followed inconsistently. You can tell Claude to follow the <a href="https://go-proverbs.github.io/">Go Proverbs</a>, or to always validate security boundaries, or to use a specific error handling pattern, but there's no guarantee it will remember or apply those rules on every implementation. <code>claude-pragma</code> solves this by mechanically injecting rules and validating compliance using semantic validators that run automatically.</p>
+<p>It includes:</p>
+<ul>
+<li><strong>Validators</strong> that block implementation until issues are resolved (security, Python style, Go idioms, TypeScript conventions)</li>
+<li><strong><code>/setup-project</code> skill</strong> that bootstraps everything: project rules, validator configuration, and the one-time Star Chamber provider setup</li>
+<li><strong><code>/implement</code> skill</strong> that wraps implementation with automatic validation</li>
+<li><strong><code>/star-chamber</code> skill</strong> for advisory multi-LLM review</li>
+</ul>
+<p>The validators distinguish between <strong>musts</strong> and <strong>shoulds</strong>. Musts are non-negotiable: if a validator flags a must, it has to be fixed before implementation can proceed. Shoulds are different: Claude can choose to skip a should, but only if it provides a rationale for why. This stops rules being blindly applied in cases where they genuinely don't fit, while still requiring the decision to be conscious and documented.</p>
+<p>When you run <code>/implement</code>, you get a summary at the end showing everything: which validators ran, what was flagged, what was fixed, and any shoulds that were skipped with their rationale. It gives you a single place to review the decisions that were made on your behalf.</p>
+<p>The Star Chamber sits alongside all of this as the advisory part: subjective, contextual, and ultimately the developer's call.</p>
+<h2 id="how-the-star-chamber-works">How the Star Chamber Works<a class="headerlink" href="#how-the-star-chamber-works" title="Permanent link">¶</a></h2>
+<p>The Star Chamber operates as both a skill (invoked explicitly with <code>/star-chamber</code>) and an <a href="https://docs.anthropic.com/en/docs/claude-code/sub-agents">agent</a> (auto-invoked when Claude Code encounters significant design decisions). When triggered, it follows a straightforward process:</p>
+<p><strong>1. Gather context.</strong> It collects the code to review (from explicit file arguments, local changes, staged changes, or recent commits), reads any project rules from <code>CLAUDE.md</code> and <code>ARCHITECTURE.md</code>, and builds a structured review prompt.</p>
+<p><strong>2. Fan out to providers.</strong> The prompt goes to all configured LLM providers in parallel. Out of the box, this means Claude, GPT, and Gemini, but the provider list is configurable. Each model reviews the code independently, with no knowledge of what the others are saying.</p>
+<p><strong>3. Aggregate by agreement.</strong> Results come back and get classified:</p>
+<ul>
+<li><strong>Consensus issues</strong> (all providers flagged it) - highest confidence, address first</li>
+<li><strong>Majority issues</strong> (two or more providers) - high confidence, worth investigating</li>
+<li><strong>Individual observations</strong> (one provider only) - may be a specialised insight, or may be noise</li>
+</ul>
+<p>This classification is the key value. When three different models independently flag the same concern, you can be reasonably confident it's a real issue. When only one model raises something, it's still worth reading, but you calibrate your confidence accordingly.</p>
+<p>What makes this aggregation work reliably is that each provider returns structured JSON against a defined contract, not free-text prose. Issues have typed fields: severity (<code>high</code>, <code>medium</code>, <code>low</code>), location (<code>file:line</code>), category (<code>craftsmanship</code>, <code>architecture</code>, <code>correctness</code>, <code>maintainability</code>), a description, and a suggested fix. This structure means the aggregation can group issues by location and category to determine genuine consensus rather than relying on fuzzy text matching.</p>
+<h2 id="two-modes-parallel-and-debate">Two Modes: Parallel and Debate<a class="headerlink" href="#two-modes-parallel-and-debate" title="Permanent link">¶</a></h2>
+<p>The default mode is <strong>parallel</strong>: all providers review independently in a single round. It's fast and good enough for most reviews.</p>
+<p>For questions where you want the models to engage with each other's reasoning, there's <strong>debate mode</strong> (<code>--debate</code>). You can specify the number of rounds with <code>--rounds N</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="go">/star-chamber --debate --rounds 3</span>
+</code></pre></div>
+<p>After each round, an anonymous summary of all providers' feedback is shared back to every provider for the next round. The crucial detail here is that it follows the <a href="https://www.chathamhouse.org/about-us/chatham-house-rule">Chatham House rule</a>. Providers see what was said but not who said it.</p>
+<figure>
+<div class="panzoom-box" data-key="alt" id="panzoom0" oncontextmenu="return false;">
+<nav class="panzoom-nav">
+<button class="panzoom-info panzoom-button">
+<svg class="panzoom-icon" viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm169.8-90.7c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path>
+</svg>
+</button><button class="panzoom-reset panzoom-button">
+<svg class="panzoom-icon" viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<path d="M125.7 160l50.3 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L48 224c-17.7 0-32-14.3-32-32L16 64c0-17.7 14.3-32 32-32s32 14.3 32 32l0 51.2L97.6 97.6c87.5-87.5 229.3-87.5 316.8 0s87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3s-163.8-62.5-226.3 0L125.7 160z"></path>
+</svg>
+</button><button class="panzoom-max panzoom-button">
+<svg class="panzoom-icon" viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+<path d="M32 32C14.3 32 0 46.3 0 64l0 96c0 17.7 14.3 32 32 32s32-14.3 32-32l0-64 64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-64zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0 0 64c0 17.7 14.3 32 32 32s32-14.3 32-32l0-96c0-17.7-14.3-32-32-32l-96 0zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 64-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c17.7 0 32-14.3 32-32l0-96z"></path>
+</svg>
+</button><button class="panzoom-min panzoom-button panzoom-hidden">
+<svg class="panzoom-icon" viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+<path d="M160 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 64-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c17.7 0 32-14.3 32-32l0-96zM32 320c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0 0 64c0 17.7 14.3 32 32 32s32-14.3 32-32l0-96c0-17.7-14.3-32-32-32l-96 0zM352 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-64zM320 320c-17.7 0-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32s32-14.3 32-32l0-64 64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0z"></path>
+</svg>
+</button>
+</nav>
+<pre class="mermaid"><code>---
+config:
+  theme: base
+  themeVariables:
+    primaryColor: '#e8f4fd'
+    primaryTextColor: '#1a1a1a'
+    primaryBorderColor: '#2196F3'
+    secondaryColor: '#fff3e0'
+    secondaryTextColor: '#1a1a1a'
+    secondaryBorderColor: '#FF9800'
+    tertiaryColor: '#e8f5e9'
+    tertiaryTextColor: '#1a1a1a'
+    tertiaryBorderColor: '#4CAF50'
+    lineColor: '#666666'
+---
+flowchart TD
+    R1["Round 1: All providers review independently"]
+    S1["Anonymous synthesis of all feedback"]
+    R2["Round 2: Each provider sees synthesis, refines position"]
+    S2["Anonymous synthesis"]
+    RN["Round N: Final positions after deliberation"]
+    Conv["(or earlier, if the council converges)"]
+
+    R1 --&gt; S1
+    S1 --&gt; R2
+    R2 --&gt; S2
+    S2 -.-&gt;|"repeat as needed"| R2
+    S2 --&gt; RN
+    RN --&gt; Conv
+
+    class S1,S2 secondary
+    class Conv tertiary
+</code></pre>
+<div class="panzoom-info-box panzoom-info-box-bottom panzoom-hidden">
+Hold "Alt" / "Option" to enable pan &amp; zoom
+</div>
+</div>
+<figcaption>Debate mode: providers review independently each round, with anonymous synthesis shared between rounds.</figcaption>
+</figure>
+<p>I believe the anonymity matters. Attribution might anchor the discussion - if a model knows "Claude said X", that becomes a reference point to agree or disagree with rather than an idea to engage with on its merits. By stripping the source, the synthesis is just a set of observations and arguments. The models don't need to know whether feedback came from another LLM or a human; what matters is the substance.</p>
+<p>A debate round might share something like:</p>
+<blockquote>
+<p><strong>Other council members' feedback (round 1):</strong></p>
+<p><strong>Issues raised:</strong></p>
+<ul>
+<li>The config loader silently ignores missing env vars, risking runtime errors</li>
+<li>Linear search in <code>get_resource_definition</code> may be slow for large configs</li>
+<li>Consider adding a strict mode for env var validation</li>
+</ul>
+<p><strong>Points of agreement:</strong></p>
+<ul>
+<li>Type hints are solid</li>
+<li>Overall code structure is clean</li>
+</ul>
+<p>Please provide your perspective on these points.</p>
+</blockquote>
+<p>Each provider then re-evaluates, sometimes changing position when presented with arguments they hadn't considered, sometimes doubling down with additional evidence. The process can converge before reaching the specified number of rounds if the providers reach agreement early. The result is a more thorough analysis than any single round could produce.</p>
+<h2 id="an-example-the-star-chamber-reviews-itself">An Example: The Star Chamber Reviews Itself<a class="headerlink" href="#an-example-the-star-chamber-reviews-itself" title="Permanent link">¶</a></h2>
+<p>Early on, I pointed the Star Chamber at itself - a meta-review of its own code in debate mode with GPT-4o, Claude, and Gemini (<a href="https://github.com/peteski22/claude-pragma/issues/2">full output</a>):</p>
+<p><strong>Consensus Issues (All Providers Agree)</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Location</th>
+<th>Severity</th>
+<th>Category</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>llm_council.py:debate_mode</code></td>
+<td>MEDIUM</td>
+<td>correctness</td>
+<td>Debate mode lacks mechanism to prevent infinite loops if LLMs disagree. No convergence detection.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>llm_council.py:API_key_handling</code></td>
+<td>MEDIUM</td>
+<td>security</td>
+<td>API keys loaded without proper masking in logs/error messages. Risk of accidental exposure.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>llm_council.py:various</code></td>
+<td>MEDIUM</td>
+<td>architecture</td>
+<td>Code lacks clear separation of concerns - SDK loading, provider interaction, review logic, and aggregation all in one file.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Majority Issues (2/3 Providers)</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Location</th>
+<th>Severity</th>
+<th>Category</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>llm_council.py:get_provider_client</code></td>
+<td>HIGH</td>
+<td>correctness/security</td>
+<td>Dynamic SDK loading via importlib doesn't validate imported module. Risk of loading malicious packages.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>llm_council.py:run_parallel_reviews</code></td>
+<td>MEDIUM</td>
+<td>correctness</td>
+<td>No timeout mechanism for parallel reviews. Hanging LLM call could block indefinitely.</td>
+</tr>
+</tbody>
+</table>
+<p>All of those were legitimate findings. The convergence detection issue, the API key masking, the timeout handling - these were real problems that got fixed. The fact that the tool found genuine issues in its own implementation was a good early signal that the approach works. Turtles all the way down.</p>
+<h2 id="design-questions-not-just-code-review">Design Questions, Not Just Code Review<a class="headerlink" href="#design-questions-not-just-code-review" title="Permanent link">¶</a></h2>
+<p>The Star Chamber isn't limited to reviewing code that already exists. It handles design and architectural questions too. If you're deciding between event sourcing and traditional CRUD for an audit trail, or weighing whether to introduce a message queue versus synchronous processing, you can put the question to the council.</p>
+<p>You can mix code review with design goals in a single invocation:</p>
+<div class="highlight"><pre><span></span><code><span class="go">/star-chamber --debate --rounds 3 review local changes for design and achieving the goal of GitHub issue #42</span>
+</code></pre></div>
+<p>Each provider evaluates the local changes against both the code quality and the intent of the issue, then refines through debate. You get a structured analysis of where three different models converge and where they see legitimate trade-offs.</p>
+<h2 id="where-this-fits-in-the-pipeline">Where This Fits in the Pipeline<a class="headerlink" href="#where-this-fits-in-the-pipeline" title="Permanent link">¶</a></h2>
+<p>The Star Chamber is explicitly <strong>advisory, not blocking</strong>. In claude-pragma, semantic validators run automatically and block implementation until issues are resolved. The Star Chamber sits after that:</p>
+<figure>
+<div class="panzoom-box" data-key="alt" id="panzoom0" oncontextmenu="return false;">
+<nav class="panzoom-nav">
+<button class="panzoom-info panzoom-button">
+<svg class="panzoom-icon" viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm169.8-90.7c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"></path>
+</svg>
+</button><button class="panzoom-reset panzoom-button">
+<svg class="panzoom-icon" viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+<path d="M125.7 160l50.3 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L48 224c-17.7 0-32-14.3-32-32L16 64c0-17.7 14.3-32 32-32s32 14.3 32 32l0 51.2L97.6 97.6c87.5-87.5 229.3-87.5 316.8 0s87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3s-163.8-62.5-226.3 0L125.7 160z"></path>
+</svg>
+</button><button class="panzoom-max panzoom-button">
+<svg class="panzoom-icon" viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+<path d="M32 32C14.3 32 0 46.3 0 64l0 96c0 17.7 14.3 32 32 32s32-14.3 32-32l0-64 64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-64zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0 0 64c0 17.7 14.3 32 32 32s32-14.3 32-32l0-96c0-17.7-14.3-32-32-32l-96 0zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 64-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c17.7 0 32-14.3 32-32l0-96z"></path>
+</svg>
+</button><button class="panzoom-min panzoom-button panzoom-hidden">
+<svg class="panzoom-icon" viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+<path d="M160 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 64-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c17.7 0 32-14.3 32-32l0-96zM32 320c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0 0 64c0 17.7 14.3 32 32 32s32-14.3 32-32l0-96c0-17.7-14.3-32-32-32l-96 0zM352 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-64zM320 320c-17.7 0-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32s32-14.3 32-32l0-64 64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0z"></path>
+</svg>
+</button>
+</nav>
+<pre class="mermaid"><code>---
+config:
+  theme: base
+  themeVariables:
+    primaryColor: '#e8f4fd'
+    primaryTextColor: '#1a1a1a'
+    primaryBorderColor: '#2196F3'
+    secondaryColor: '#fff3e0'
+    secondaryTextColor: '#1a1a1a'
+    secondaryBorderColor: '#FF9800'
+    tertiaryColor: '#e8f5e9'
+    tertiaryTextColor: '#1a1a1a'
+    tertiaryBorderColor: '#4CAF50'
+    lineColor: '#666666'
+---
+flowchart TD
+    Impl["Implementation with validators"]
+    Block["Blocking: security, style, language idioms"]
+    Done["Completes"]
+    Advisory["Advisory: /star-chamber"]
+    Dev["Developer decision"]
+
+    Impl --&gt; Block
+    Block --&gt; Done
+    Done --&gt; Advisory
+    Advisory --&gt; Dev
+
+    class Block secondary
+    class Dev tertiary
+</code></pre>
+<div class="panzoom-info-box panzoom-info-box-bottom panzoom-hidden">
+Hold "Alt" / "Option" to enable pan &amp; zoom
+</div>
+</div>
+<figcaption>Validators block until fixed. The Star Chamber advises, but the developer decides.</figcaption>
+</figure>
+<p>Validators enforce objective, automatable rules: "don't use <code>assert</code> for control flow", "error strings shouldn't be capitalised", "never commit secrets." These are binary.</p>
+<p>The Star Chamber handles subjective, contextual questions: "is this the right abstraction?", "will this scale?", "is this over-engineered?" Those need human judgement as the final arbiter.</p>
+<p>When running as an agent (auto-invoked), it uses parallel mode only and limits itself to genuinely significant decisions. It won't fire on a README change or a routine bug fix.</p>
+<h2 id="the-plumbing">The Plumbing<a class="headerlink" href="#the-plumbing" title="Permanent link">¶</a></h2>
+<p>Under the hood, the Star Chamber uses Mozilla.ai's open source <a href="https://github.com/mozilla-ai/any-llm">any-llm</a> to talk to providers, executed via <code>uv run</code> so there's no global Python installation to manage.</p>
+<p>Provider configuration lives in <code>~/.config/star-chamber/providers.json</code> and gets set up the first time you run <code>/setup-project</code>.</p>
+<p>A multi-LLM system means managing API keys for every provider you want to use. That gets old fast. Three providers means three API keys in environment variables, three billing dashboards, three sets of usage limits to track. The <a href="https://any-llm.ai/">any-llm managed platform</a> (built at Mozilla.ai, in <a href="https://blog.mozilla.ai/secure-your-keys-track-your-costs-any-llm-managed-platform-enters-open-beta/">open beta</a> at the time of writing) solves this with a single virtual key. You store one <code>ANY_LLM_KEY</code> environment variable and it handles authentication to all configured providers. Your actual provider keys are encrypted client-side and never stored in raw text on their servers.</p>
+<p>With platform mode, the provider config is clean:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"platform"</span><span class="p">:</span><span class="w"> </span><span class="s2">"any-llm"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"providers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openai"</span><span class="p">,</span><span class="w"> </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gpt-5.2"</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"anthropic"</span><span class="p">,</span><span class="w"> </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"claude-opus-4-6"</span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gemini"</span><span class="p">,</span><span class="w"> </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gemini-2.5-flash"</span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"consensus_threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"timeout_seconds"</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>You also get usage tracking, cost analytics, and budget controls across all providers in one place, which is particularly useful for something like the Star Chamber where every invocation fans out to multiple models. No prompt content is logged, only metadata like token counts, cost, and latency.</p>
+<p>Alternatively, you can use individual API keys per provider if you prefer direct access. Either way, adding or removing providers is just a config change. You can easily configure Mistral or Llama with just an additional <code>providers.json</code> entry and the SDK handles the rest.</p>
+<h2 id="validation-perplexitys-model-council">Validation: Perplexity's Model Council<a class="headerlink" href="#validation-perplexitys-model-council" title="Permanent link">¶</a></h2>
+<p>About a week after the first Star Chamber commits landed (January 30th), Perplexity <a href="https://www.perplexity.ai/hub/blog/introducing-model-council">launched Model Council</a> on February 5th, a feature that runs queries across multiple frontier models simultaneously and synthesises the results. Neither project influenced the other; we just arrived at the same idea independently. Their framing mirrors the same intuition:</p>
+<blockquote>
+<p>Every AI model has blind spots. It might overlook context, lean toward certain perspectives, or fill gaps with confident guesses. For research you're acting on, it's a big risk.</p>
+</blockquote>
+<p>Their approach sounds very similar to ideas in claude-pragma, running the query through Claude, GPT, and Gemini in parallel, then a synthesizer model resolves conflicts and shows where the models agree versus diverge.</p>
+<p>When two teams working on completely different problems independently converge on a similar solution or architecture, that's a strong signal that multi-model consensus is becoming a recognised pattern for any task where accuracy matters more than speed.</p>
+<p>Although the projects have different domains and scopes: Perplexity for research queries and Star Chamber for software engineering (code review, catching bugs, and design trade-offs), it's the same principle.</p>
+<h2 id="why-this-works">Why This Works<a class="headerlink" href="#why-this-works" title="Permanent link">¶</a></h2>
+<p>It's the same reason code review works in human teams. No single reviewer catches everything, but different people bring different knowledge, different pattern recognition, and different things they're sensitive to. The Star Chamber just applies that to AI-assisted development, using models with different training data and architectures instead of people with different backgrounds and experience.</p>
+<h2 id="what-ive-learned-using-it">What I've Learned Using It<a class="headerlink" href="#what-ive-learned-using-it" title="Permanent link">¶</a></h2>
+<p>A few observations from building and using this:</p>
+<p><strong>Consensus issues are almost always worth fixing.</strong> When three independently-trained models flag the same concern, ignoring it is hard to justify. These tend to be genuine problems, not stylistic preferences.</p>
+<p><strong>Individual observations are where the interesting insights hide.</strong> Sometimes only one model spots something, and it turns out to be the most valuable feedback. The classification doesn't mean "ignore individual observations"; it's more like "calibrate your confidence accordingly."</p>
+<p><strong>Debate mode changes minds.</strong> In multi-round debates, providers regularly shift position after seeing anonymous synthesis. And yes, LLMs are generally sycophantic, but in this case the anonymous synthesis seems to genuinely surface arguments they hadn't considered rather than just agreeing for the sake of it. This is the strongest argument for debate over simple parallel review.</p>
+<p><strong>The advisory-not-blocking distinction is essential.</strong> Making it blocking would slow development to a crawl and create false authority. These are AI opinions informed by multiple perspectives, but still opinions. The engineer decides.</p>
+<h2 id="whats-next">What's Next<a class="headerlink" href="#whats-next" title="Permanent link">¶</a></h2>
+<p>There's one direction I'm particularly interested in: assigning personas to council members. Rather than three generic reviewers, you'd configure the council so one member reviews through a security lens, another focuses on performance, and a third evaluates maintainability. Different lenses on the same code, reflecting how a well-structured review team would actually operate.</p>
+<p>The original idea for the Star Chamber was actually a Slack-based chat room where different AI models could discuss your code in a thread. Building it as a Claude Code skill turned out to be more practical, but the conversational quality of debate mode captures some of that original spirit.</p>
+<h2 id="try-it">Try It<a class="headerlink" href="#try-it" title="Permanent link">¶</a></h2>
+<p>The Star Chamber is part of <a href="https://github.com/peteski22/claude-pragma">claude-pragma</a>, which is open source. If you're using Claude Code and want to give it a go, setup is straightforward:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:peteski22/claude-pragma.git
+<span class="nb">cd</span><span class="w"> </span>claude-pragma
+make<span class="w"> </span>install
+</code></pre></div>
+<p>That links the skills and agents into your Claude Code environment. Then simply run <code>/setup-project</code> in a Claude session within your own project to configure validators and Star Chamber providers. The Star Chamber setup only needs doing once - after that, <code>/setup-project</code> in new projects will recognise it's already configured and skip it. Then <code>/star-chamber</code> whenever you want a council review.</p>
+<p>I'm particularly interested in how other people configure their provider lists and whether different model combinations surface different kinds of insights. If you try it, I'd like to hear what you find.</p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      All views and opinions expressed on this site are my own and do not represent the views of my employer or any organizations I am affiliated with.
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+<script src="../../../../assets/javascripts/panzoom.min.js"></script>
+<script src="../../../../assets/javascripts/zoompan.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+window.mermaidConfig = {default: {
+    startOnLoad: false
+}};</script></body>
+</html>
