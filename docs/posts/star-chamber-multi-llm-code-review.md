@@ -91,7 +91,7 @@ For questions where you want the models to engage with each other's reasoning, t
 /star-chamber --debate --rounds 3
 ```
 
-After each round, an anonymous summary of all providers' feedback is shared back to every provider for the next round. The crucial detail here is that it follows [Chatham House rules](https://www.chathamhouse.org/about-us/chatham-house-rule). Providers see what was said but not who said it.
+After each round, an anonymous summary of all providers' feedback is shared back to every provider for the next round. The crucial detail here is that it follows the [Chatham House rule](https://www.chathamhouse.org/about-us/chatham-house-rule). Providers see what was said but not who said it.
 
 <figure markdown="span">
 
@@ -236,7 +236,7 @@ When running as an agent (auto-invoked), it uses parallel mode only and limits i
 
 ## The Plumbing
 
-Under the hood, the Star Chamber uses Mozilla.ai's open source [any-llm-sdk](https://pypi.org/project/any-llm-sdk/) to talk to providers, executed via `uv run` so there's no global Python installation to manage.
+Under the hood, the Star Chamber uses Mozilla.ai's open source [any-llm](https://github.com/mozilla-ai/any-llm) to talk to providers, executed via `uv run` so there's no global Python installation to manage.
 
 Provider configuration lives in `~/.config/star-chamber/providers.json` and gets set up the first time you run `/setup-project`.
 
