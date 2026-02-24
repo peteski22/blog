@@ -19,7 +19,7 @@
 <link href="../../../../assets/stylesheets/panzoom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <meta name="panzoom-theme" content="material">
-<meta name="panzoom-data" content='{"selectors": [".d2", ".mermaid"], "initial_zoom_level": 1.0}'> </head>
+<meta name="panzoom-data" content='{"selectors": [".mermaid", ".d2"], "initial_zoom_level": 1.0}'> </head>
 <body data-md-color-accent="indigo" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
@@ -823,12 +823,11 @@ Hold "Alt" / "Option" to enable pan &amp; zoom
 <p>There's one direction I'm particularly interested in: assigning personas to council members. Rather than three generic reviewers, you'd configure the council so one member reviews through a security lens, another focuses on performance, and a third evaluates maintainability. Different lenses on the same code, reflecting how a well-structured review team would actually operate.</p>
 <p>The original idea for the Star Chamber was actually a Slack-based chat room where different AI models could discuss your code in a thread. Building it as a Claude Code skill turned out to be more practical, but the conversational quality of debate mode captures some of that original spirit.</p>
 <h2 id="try-it">Try It<a class="headerlink" href="#try-it" title="Permanent link">¶</a></h2>
-<p>The Star Chamber is part of <a href="https://github.com/peteski22/claude-pragma">claude-pragma</a>, which is open source. If you're using Claude Code and want to give it a go, setup is straightforward:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:peteski22/claude-pragma.git
-<span class="nb">cd</span><span class="w"> </span>claude-pragma
-make<span class="w"> </span>install
+<p>The Star Chamber is part of <a href="https://github.com/peteski22/claude-pragma">claude-pragma</a>, which is open source. If you're using Claude Code and want to give it a go, it's available as a plugin from the Claude Code marketplace:</p>
+<div class="highlight"><pre><span></span><code><span class="go">/plugin marketplace add peteski22/claude-pragma</span>
+<span class="go">/plugin install pragma@claude-pragma</span>
 </code></pre></div>
-<p>That links the skills and agents into your Claude Code environment. Then simply run <code>/setup-project</code> in a Claude session within your own project to configure validators and Star Chamber providers. The Star Chamber setup only needs doing once - after that, <code>/setup-project</code> in new projects will recognise it's already configured and skip it. Then <code>/star-chamber</code> whenever you want a council review.</p>
+<p>Then run <code>/setup-project</code> in any project to configure validators and Star Chamber providers. The Star Chamber setup only needs doing once - after that, <code>/setup-project</code> in new projects will recognise it's already configured and skip it. Then <code>/star-chamber</code> whenever you want a council review.</p>
 <p>I'm particularly interested in how other people configure their provider lists and whether different model combinations surface different kinds of insights. If you try it, I'd like to hear what you find.</p>
 </article>
 </div>
