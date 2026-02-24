@@ -297,14 +297,13 @@ The original idea for the Star Chamber was actually a Slack-based chat room wher
 
 ## Try It
 
-The Star Chamber is part of [claude-pragma](https://github.com/peteski22/claude-pragma), which is open source. If you're using Claude Code and want to give it a go, setup is straightforward:
+The Star Chamber is part of [claude-pragma](https://github.com/peteski22/claude-pragma), which is open source. If you're using Claude Code and want to give it a go, it's available as a plugin from the Claude Code marketplace:
 
-```bash
-git clone git@github.com:peteski22/claude-pragma.git
-cd claude-pragma
-make install
+```console
+/plugin marketplace add peteski22/claude-pragma
+/plugin install pragma@claude-pragma
 ```
 
-That links the skills and agents into your Claude Code environment. Then simply run `/setup-project` in a Claude session within your own project to configure validators and Star Chamber providers. The Star Chamber setup only needs doing once - after that, `/setup-project` in new projects will recognise it's already configured and skip it. Then `/star-chamber` whenever you want a council review.
+Then run `/setup-project` in any project to configure validators and Star Chamber providers. The Star Chamber setup only needs doing once - after that, `/setup-project` in new projects will recognise it's already configured and skip it. Then `/star-chamber` whenever you want a council review.
 
 I'm particularly interested in how other people configure their provider lists and whether different model combinations surface different kinds of insights. If you try it, I'd like to hear what you find.
