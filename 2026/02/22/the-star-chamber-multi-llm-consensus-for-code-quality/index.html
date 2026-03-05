@@ -884,6 +884,12 @@ Hold "Alt" / "Option" to enable pan &amp; zoom
 </tbody>
 </table>
 <p>The <code>--context-file</code> flag is particularly useful for feeding in an <code>ARCHITECTURE.md</code> or <code>CLAUDE.md</code> so the council reviews against your project's actual conventions rather than general best practice.</p>
+<p><strong>With the any-llm managed platform:</strong></p>
+<p>If you're using the <a href="https://any-llm.ai/">any-llm managed platform</a> for centralised key management (one virtual key instead of one per provider), install with the platform extra:</p>
+<div class="highlight"><pre><span></span><code><span class="go">uvx --with 'star-chamber[platform]' star-chamber review src/main.py</span>
+<span class="go">uvx --with 'star-chamber[platform]' star-chamber ask "Event sourcing or CRUD for the audit trail?"</span>
+</code></pre></div>
+<p>Your <code>providers.json</code> stays the same as described in the <a href="#the-plumbing">Plumbing</a> section above — the extra just pulls in the platform client that resolves your <code>ANY_LLM_KEY</code> against the configured providers.</p>
 <p><strong>As part of agent-pragma</strong> (includes validators, <code>/implement</code>, and auto-invocation):</p>
 <div class="highlight"><pre><span></span><code><span class="go">/plugin marketplace add peteski22/agent-pragma</span>
 <span class="go">/plugin install pragma@agent-pragma</span>
