@@ -20,7 +20,7 @@ The name is a nod to [Mark Schwartz's](https://www.linkedin.com/in/innovativecio
 
 The original [Star Chamber](https://en.wikipedia.org/wiki/Star_Chamber) was a 15th-17th century English court at the Palace of Westminster, a council of privy councillors and common-law judges established to handle cases too significant for ordinary courts. A panel of independent reviewers, each bringing different expertise, deliberating on the same evidence.
 
-The Star Chamber is part of a broader project called [claude-pragma](https://github.com/peteski22/claude-pragma), which I'll come back to shortly.
+The Star Chamber is part of a broader project called [agent-pragma](https://github.com/peteski22/agent-pragma), which I'll come back to shortly.
 
 ## The Problem with Single-Model Review
 
@@ -42,13 +42,13 @@ In a remote-first world, there's also a practical angle. You don't always want t
 
 So the question became: what if that whole process of consulting multiple models and synthesising their views could be automated in a constructive way?
 
-## `claude-pragma`: The Bigger Picture
+## `agent-pragma`: The Bigger Picture
 
 Before diving into the Star Chamber, it's worth understanding the project it belongs to...
 
-[claude-pragma](https://github.com/peteski22/claude-pragma) is a collection of skills, agents, and validators for Claude Code that aim to make working with Claude more deterministic.
+[agent-pragma](https://github.com/peteski22/agent-pragma) is a collection of skills, agents, and validators for Claude Code that aim to make working with Claude more deterministic.
 
-The core problem: Claude Code's rules (defined in `CLAUDE.md` files) are followed inconsistently. You can tell Claude to follow the [Go Proverbs](https://go-proverbs.github.io/), or to always validate security boundaries, or to use a specific error handling pattern, but there's no guarantee it will remember or apply those rules on every implementation. `claude-pragma` solves this by mechanically injecting rules and validating compliance using semantic validators that run automatically.
+The core problem: Claude Code's rules (defined in `CLAUDE.md` files) are followed inconsistently. You can tell Claude to follow the [Go Proverbs](https://go-proverbs.github.io/), or to always validate security boundaries, or to use a specific error handling pattern, but there's no guarantee it will remember or apply those rules on every implementation. `agent-pragma` solves this by mechanically injecting rules and validating compliance using semantic validators that run automatically.
 
 It includes:
 
@@ -156,7 +156,7 @@ Each provider then re-evaluates, sometimes changing position when presented with
 
 ## An Example: The Star Chamber Reviews Itself
 
-Early on, I pointed the Star Chamber at itself - a meta-review of its own code in debate mode with GPT-4o, Claude, and Gemini ([full output](https://github.com/peteski22/claude-pragma/issues/2)):
+Early on, I pointed the Star Chamber at itself - a meta-review of its own code in debate mode with GPT-4o, Claude, and Gemini ([full output](https://github.com/peteski22/agent-pragma/issues/2)):
 
 **Consensus Issues (All Providers Agree)**
 
@@ -189,7 +189,7 @@ Each provider evaluates the local changes against both the code quality and the 
 
 ## Where This Fits in the Pipeline
 
-The Star Chamber is explicitly **advisory, not blocking**. In claude-pragma, semantic validators run automatically and block implementation until issues are resolved. The Star Chamber sits after that:
+The Star Chamber is explicitly **advisory, not blocking**. In agent-pragma, semantic validators run automatically and block implementation until issues are resolved. The Star Chamber sits after that:
 
 <figure markdown="span">
 
@@ -267,7 +267,7 @@ About a week after the first Star Chamber commits landed (January 30th), Perplex
 
 > Every AI model has blind spots. It might overlook context, lean toward certain perspectives, or fill gaps with confident guesses. For research you're acting on, it's a big risk.
 
-Their approach sounds very similar to ideas in claude-pragma, running the query through Claude, GPT, and Gemini in parallel, then a synthesizer model resolves conflicts and shows where the models agree versus diverge.
+Their approach sounds very similar to ideas in agent-pragma, running the query through Claude, GPT, and Gemini in parallel, then a synthesizer model resolves conflicts and shows where the models agree versus diverge.
 
 When two teams working on completely different problems independently converge on a similar solution or architecture, that's a strong signal that multi-model consensus is becoming a recognised pattern for any task where accuracy matters more than speed.
 
@@ -295,15 +295,52 @@ There's one direction I'm particularly interested in: assigning personas to coun
 
 The original idea for the Star Chamber was actually a Slack-based chat room where different AI models could discuss your code in a thread. Building it as a Claude Code skill turned out to be more practical, but the conversational quality of debate mode captures some of that original spirit.
 
+## Update: March 2026
+
+A few things have moved since this post went up.
+
+**The rename.** `claude-pragma` is now [agent-pragma](https://github.com/peteski22/agent-pragma). The original name tied it to Claude Code, but it now works with [OpenCode](https://opencode.ai) too, so the broader name fits better. I've updated the references in this post to match.
+
+**Star Chamber is now a standalone SDK.** This is the biggest change. What started as a Python script embedded inside the plugin — council logic, provider transport, consensus classification, prompt templates, all in one place — has been extracted into its own [repository](https://github.com/peteski22/star-chamber) and published to PyPI. You can use it independently of agent-pragma as a CLI (`uvx star-chamber review ...`) or as a Python library (`from star_chamber import run_council`). About 3,000 lines moved out of agent-pragma in the process.
+
+The extraction also produced a formal [council protocol specification](https://github.com/peteski22/star-chamber) with JSON schemas defining the wire format between the orchestrator and providers. What was implicit in the original implementation is now an explicit, versioned contract. The skill inside agent-pragma is now a thin wrapper that shells out to the SDK.
+
+**Dual-entrypoint architecture.** The Star Chamber now operates as both an explicit skill (`/star-chamber`) and an auto-invoked agent that fires on significant architectural decisions. The agent uses a lighter-weight model and parallel mode only, keeping it fast enough to run in the background without disrupting flow. When it triggers as an agent, you get the council's take without having to remember to ask for it.
+
+**Zero-config.** Skills now work immediately without running `/setup-project` first. The setup skill still exists for customising validator configuration and provider lists, but it's no longer a prerequisite. You install the plugin and go.
+
 ## Try It
 
-The Star Chamber is part of [claude-pragma](https://github.com/peteski22/claude-pragma), which is open source. If you're using Claude Code and want to give it a go, it's available as a plugin from the Claude Code marketplace:
+The Star Chamber can be used standalone or as part of agent-pragma.
+
+**Standalone SDK** (no plugin required):
 
 ```console
-/plugin marketplace add peteski22/claude-pragma
-/plugin install pragma@claude-pragma
+uvx star-chamber review src/main.py src/config.py
+uvx star-chamber ask "Should this service use event sourcing or CRUD?"
 ```
 
-Then run `/setup-project` in any project to configure validators and Star Chamber providers. The Star Chamber setup only needs doing once - after that, `/setup-project` in new projects will recognise it's already configured and skip it. Then `/star-chamber` whenever you want a council review.
+Both `review` and `ask` support the same set of flags:
+
+| Flag | Description |
+|------|-------------|
+| `-p` / `--provider` | Provider to include, repeatable (e.g. `-p openai -p anthropic`) |
+| `--context-file` | File containing project context to include in the prompt |
+| `--council-context` | Prior council round feedback for debate mode |
+| `--config` | Path to a `providers.json` |
+| `--timeout` | Per-provider timeout in seconds |
+| `--format` | Output format: `text` (default) or `json` |
+| `--output` | Write JSON result to a file |
+
+The `--context-file` flag is particularly useful for feeding in an `ARCHITECTURE.md` or `CLAUDE.md` so the council reviews against your project's actual conventions rather than general best practice.
+
+**As part of agent-pragma** (includes validators, `/implement`, and auto-invocation):
+
+```console
+/plugin marketplace add peteski22/agent-pragma
+/plugin install pragma@agent-pragma
+```
+
+Then `/star-chamber` whenever you want a council review. If you want to customise provider lists or validator configuration, `/setup-project` handles that, but it's optional.
 
 I'm particularly interested in how other people configure their provider lists and whether different model combinations surface different kinds of insights. If you try it, I'd like to hear what you find.
