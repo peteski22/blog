@@ -334,6 +334,17 @@ Both `review` and `ask` support the same set of flags:
 
 The `--context-file` flag is particularly useful for feeding in an `ARCHITECTURE.md` or `CLAUDE.md` so the council reviews against your project's actual conventions rather than general best practice.
 
+**With the any-llm managed platform:**
+
+If you're using the [any-llm managed platform](https://any-llm.ai/) for centralised key management (one virtual key instead of one per provider), install with the platform extra:
+
+```console
+uvx --with 'star-chamber[platform]' star-chamber review src/main.py
+uvx --with 'star-chamber[platform]' star-chamber ask "Event sourcing or CRUD for the audit trail?"
+```
+
+Your `providers.json` stays the same as described in the [Plumbing](#the-plumbing) section above — the extra just pulls in the platform client that resolves your `ANY_LLM_KEY` against the configured providers.
+
 **As part of agent-pragma** (includes validators, `/implement`, and auto-invocation):
 
 ```console
