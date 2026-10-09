@@ -62,7 +62,7 @@
     
     
   <meta name="panzoom-theme" content="material">
-<meta name="panzoom-data" content='{"selectors": [".mermaid", ".d2"], "initial_zoom_level": 1.0}'> </head>
+<meta name="panzoom-data" content='{"selectors": [".d2", ".mermaid"], "initial_zoom_level": 1.0}'> </head>
   
   
     
@@ -906,7 +906,12 @@
 <p>My career has focused on building infrastructure and tooling that enables engineering teams to ship software faster and more reliably, with particular emphasis on authentication patterns, API design, microservices architecture, and platform engineering.</p>
 <h3 id="current">Current<a class="headerlink" href="#current" title="Permanent link">&para;</a></h3>
 <p><strong>Mozilla.ai</strong> - Staff Engineer (2024-Present)
-Building trustworthy AI infrastructure. Creator of <a href="https://github.com/mozilla-ai/mcpd">mcpd</a>, a tool for managing MCP servers across environments—bridging the gap between "works on my laptop" and production-ready deployments in real organizations.</p>
+Building open infrastructure for AI agents.</p>
+<ul>
+<li><strong><a href="https://github.com/mozilla-ai/cq">cq</a></strong>: an open standard for shared agent learning. Agents store and query what other agents have already learned, so they stop rediscovering the same failures on their own. Think "Stack Overflow, but for agents". I started it and lead it. It plugs into Claude Code, GitHub Copilot, Cursor and other agent hosts, and <a href="https://cq.exchange">cq exchange</a> (launched May 2026) is Mozilla.ai's hosted service built on top of it. I've talked about it at AI Native DevCon London and on GitHub's Open Source Friday.</li>
+<li><strong>apron</strong>: small libraries for the plumbing every product ends up needing. <a href="https://github.com/mozilla-ai/apron-auth">apron-auth</a> handles the OAuth protocol side (PKCE, code exchange, token refresh and revocation), and <a href="https://github.com/mozilla-ai/apron-tools">apron-tools</a> wraps provider APIs with typed schemas, OAuth scope mappings and LLM function-calling definitions.</li>
+<li><strong><a href="https://github.com/mozilla-ai/mcpd">mcpd</a></strong>: a tool to declare and run MCP servers the same way from a laptop to production, with SDKs in Python, .NET, Go and Rust. It's also where my <a href="../2025/11/17/mcps-identity-crisis-when-security-theatre-meets-enterprise-reality/">thoughts on MCP identity</a> came from.</li>
+</ul>
 <h3 id="previous-experience">Previous Experience<a class="headerlink" href="#previous-experience" title="Permanent link">&para;</a></h3>
 <p><strong>HashiCorp</strong> (2021-2024)
 Vault Engineering team, working on enterprise secrets management for tier-0 financial institutions. Led initiatives around audit system enhancements, filtering and redaction capabilities, and data-driven quality improvements.</p>

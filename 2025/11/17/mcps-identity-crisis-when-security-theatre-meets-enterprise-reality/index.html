@@ -19,7 +19,7 @@
 <link href="../../../../assets/stylesheets/panzoom.css" rel="stylesheet"/>
 <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 <meta name="panzoom-theme" content="material">
-<meta name="panzoom-data" content='{"selectors": [".mermaid", ".d2"], "initial_zoom_level": 1.0}'> </head>
+<meta name="panzoom-data" content='{"selectors": [".d2", ".mermaid"], "initial_zoom_level": 1.0}'> </head>
 <body data-md-color-accent="indigo" data-md-color-primary="indigo" data-md-color-scheme="default" dir="ltr">
 <input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
@@ -583,6 +583,10 @@
 </div>
 <article class="md-content__inner md-typeset">
 <h1 id="mcps-identity-crisis-when-security-theatre-meets-enterprise-reality">MCP's Identity Crisis: When Security Theatre Meets Enterprise Reality<a class="headerlink" href="#mcps-identity-crisis-when-security-theatre-meets-enterprise-reality" title="Permanent link">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Update: November 2026</p>
+<p>I've written a <a href="../../../../2026/11/17/i-got-99-problems-but-mcp-got-1/">follow-up to this post</a>. It corrects some things I got wrong here and covers what has changed in MCP since.</p>
+</div>
 <p>The Model Context Protocol (MCP) promises to be the "USB-C" of LLM integrations; simple, universal, and "extremely easy to build." Yet a fundamental disconnect exists between its security guidance and how authentication works in production systems. This isn't just a theoretical concern; it's creating an ecosystem where even official implementations can't follow the stated best practices.</p>
 <!-- more -->
 <h2 id="the-architectural-context">The Architectural Context<a class="headerlink" href="#the-architectural-context" title="Permanent link">¶</a></h2>
@@ -751,7 +755,7 @@ Hold "Alt" / "Option" to enable pan &amp; zoom
 <p><strong>Discussion <a href="https://github.com/modelcontextprotocol/modelcontextprotocol/discussions/234">#234</a></strong> (by @wdawson) proposed exactly what enterprises need: passing user tokens at the tool level to enable multi-user scenarios. It was closed after URL mode was merged, despite URL mode not addressing the core concerns.</p>
 </li>
 <li>
-<p><strong>Issue <a href="https://github.com/modelcontextprotocol/modelcontextprotocol/issues/">#195</a></strong> suggested using standard WWW-Authenticate headers and allowing clients to pass tokens directly. Sixteen developers agreed. No action taken.</p>
+<p><strong>Issue <a href="https://github.com/modelcontextprotocol/modelcontextprotocol/issues/195">#195</a></strong> suggested using standard WWW-Authenticate headers and allowing clients to pass tokens directly. Sixteen developers agreed. No action taken.</p>
 </li>
 <li>
 <p><strong>Discussion <a href="https://github.com/modelcontextprotocol/modelcontextprotocol/discussions/804">#804</a></strong> proposed a gateway-based model that would work with enterprise architectures. Still under discussion, likely to be superseded by URL mode.</p>

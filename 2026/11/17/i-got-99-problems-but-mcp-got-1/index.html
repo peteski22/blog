@@ -10,13 +10,11 @@
       
       
       
-        <link rel="canonical" href="https://peteski22.github.io/blog/2025/12/27/personal-context-infrastructure-the-repos-are-public/">
+        <link rel="canonical" href="https://peteski22.github.io/blog/2026/11/17/i-got-99-problems-but-mcp-got-1/">
       
       
-        <link rel="prev" href="../../18/why-im-building-toward-sovereign-ai/">
+        <link rel="prev" href="../../../02/22/the-star-chamber-multi-llm-consensus-for-code-quality/">
       
-      
-        <link rel="next" href="../../../../2026/02/04/ai-growth-zones-gift-horse-or-trojan-horse/">
       
       
         
@@ -27,7 +25,7 @@
     
     
       
-        <title>Personal Context Infrastructure: The Repos Are Public - Technical Blog</title>
+        <title>I got 99 problems, but MCP got 1 - Technical Blog</title>
       
     
     
@@ -81,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#personal-context-infrastructure-the-repos-are-public" class="md-skip">
+        <a href="#i-got-99-problems-but-mcp-got-1" class="md-skip">
           Skip to content
         </a>
       
@@ -117,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Personal Context Infrastructure: The Repos Are Public
+              I got 99 problems, but MCP got 1
             
           </span>
         </div>
@@ -736,69 +734,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#the-architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Architecture
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#supporting-repositories" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Supporting Repositories
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#current-state" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Current State
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-open-source" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why Open Source?
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#get-involved" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Get Involved
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -853,7 +788,7 @@
                     <li class="md-nav__item">
                       <div class="md-nav__link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
-                        <time datetime="2025-12-27 00:00:00+00:00" class="md-ellipsis">December 27, 2025</time>
+                        <time datetime="2026-11-17 00:00:00+00:00" class="md-ellipsis">November 17, 2026</time>
                       </div>
                     </li>
                     
@@ -866,8 +801,8 @@
                             
                               <a href="../../../../category/ai/">AI</a>, 
                               <a href="../../../../category/architecture/">Architecture</a>, 
-                              <a href="../../../../category/privacy/">Privacy</a>, 
-                              <a href="../../../../category/open-source/">Open Source</a></span>
+                              <a href="../../../../category/identity/">Identity</a>, 
+                              <a href="../../../../category/mcp/">MCP</a></span>
                         </div>
                       </li>
                     
@@ -878,7 +813,7 @@
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
                           <span class="md-ellipsis">
                             
-                              3 min read
+                              6 min read
                             
                           </span>
                         </div>
@@ -902,49 +837,78 @@
 
 
 
-<h1 id="personal-context-infrastructure-the-repos-are-public">Personal Context Infrastructure: The Repos Are Public<a class="headerlink" href="#personal-context-infrastructure-the-repos-are-public" title="Permanent link">&para;</a></h1>
-<p>Last week I wrote about building toward sovereign AI - infrastructure that keeps your data local while letting AI actually help you. Today the repositories are public. Here's what's in them...</p>
+<h1 id="i-got-99-problems-but-mcp-got-1">I got 99 problems, but MCP got 1<a class="headerlink" href="#i-got-99-problems-but-mcp-got-1" title="Permanent link">&para;</a></h1>
+<p>Almost a year ago, while working on an open source project at Mozilla AI named <a href="https://blog.mozilla.ai/meet-mcpd-requirements-txt-for-agentic-systems/">mcpd</a> (also a <a href="https://blog.mozilla.ai/mcpd-plugins-extend-your-agent-infrastructure-without-touching-your-code/">plugin system</a> and <a href="https://blog.mozilla.ai/mcpd-proxy-centralized-tool-access-for-ai-agents-in-vs-code-cursor-and-beyond/">proxy</a>), I became frustrated in my dealings with the Model Context Protocol (MCP). So, like a good keyboard warrior, I <a href="../../../../2025/11/17/mcps-identity-crisis-when-security-theatre-meets-enterprise-reality/">wrote about it on the internet</a>.</p>
+<p>Since that time, a lot has changed in the fast-moving world of AI and with MCP. A few times over these months I thought: I should do a follow-up post, but then work got in the way. But fear not... the time has come.</p>
 <!-- more -->
 
-<h2 id="the-architecture">The Architecture<a class="headerlink" href="#the-architecture" title="Permanent link">&para;</a></h2>
-<p>PCI has five layers, each with its own repository:</p>
-<p><strong>Layer 1: Context Store</strong> (<a href="https://github.com/peteski22/pci-context-store">pci-context-store</a>)
-Encrypted local storage using AES-256-GCM. Your data stays on your devices, synced via CRDTs when you have multiple. Vector embeddings via sqlite-vec enable semantic search over your personal context. Also caches ZKPs for reuse across services. Nothing leaves your device unless you want it to.</p>
-<p><strong>Layer 2: Personal Agent</strong> (<a href="https://github.com/peteski22/pci-agent">pci-agent</a>)
-Runs small language models locally - Phi-3, Llama, Mistral, whatever fits your hardware. The agent queries your encrypted context store and enforces policies before responding. Your AI assistant actually runs on your machine.</p>
-<p><strong>Layer 3: Smart Contracts</strong> (<a href="https://github.com/peteski22/pci-contracts">pci-contracts</a>)
-Cardano contracts that flip who sets the terms. You define the policy; requesters agree to it or don't get access. The opposite of clicking "I agree" on terms you didn't write. Commitments are recorded on-chain - doesn't prevent future misuse, but makes it provable.</p>
-<p><strong>Layer 4: Zero-Knowledge Proofs</strong> (<a href="https://github.com/peteski22/pci-zkp">pci-zkp</a>)
-Midnight integration for verification without disclosure. Prove you're over 18 without revealing your birthdate. Prove you have a credential without exposing which one. Proofs are cached and reusable - verify once, use many times without paying repeatedly. Services get the answer they need; you keep the data they don't.</p>
-<p><strong>Layer 5: Identity</strong> (<a href="https://github.com/peteski22/pci-identity">pci-identity</a>)
-DID management with ephemeral identities per interaction. No cross-service tracking. Each service sees a different you, unlinkable to your others. But you can prove linkage to your root identity when needed - for legal claims or if law enforcement requires it.</p>
-<h2 id="supporting-repositories">Supporting Repositories<a class="headerlink" href="#supporting-repositories" title="Permanent link">&para;</a></h2>
+<p>I'll start by briefly explaining why I was making a racket in the first place. Yes it was partially therapeutic, but I wanted to draw attention to a problem I saw in MCP, which was that there was no standard way to get a user's identity to systems 'upstream' of an MCP server. My proposal to stoke debate was an <a href="https://github.com/modelcontextprotocol/modelcontextprotocol/discussions/1827">upstream_identity</a> field (it closed on 2026-09-25 when Discussions became meeting-notes only), looking back at this now it probably wasn't the right solution, but the important thing was that the problem existed (and still does to some extent), and I really felt like it should be talked about.</p>
+<p>Better to get this out of the way early, and my apologies...</p>
+<p>My post got a few things wrong:</p>
 <ul>
-<li><a href="https://github.com/peteski22/pci-spec">pci-spec</a> - S-PAL schema definitions and protocol specifications</li>
-<li><a href="https://github.com/peteski22/pci-docs">pci-docs</a> - Architecture documentation and concept explanations</li>
-<li><a href="https://github.com/peteski22/pci-infra">pci-infra</a> - Docker Compose configurations for local development</li>
-<li><a href="https://github.com/peteski22/pci-demo">pci-demo</a> - Demo applications showing the stack in action</li>
+<li>I said "No action taken" on <a href="https://github.com/modelcontextprotocol/modelcontextprotocol/issues/195">MCP#195</a>, but it was closed as completed, and the 2025-06-18 spec made <code>WWW-Authenticate</code> a MUST.</li>
+<li><a href="https://github.com/modelcontextprotocol/modelcontextprotocol/discussions/234#discussioncomment-13054006">MCP#234</a> was closed by its own author in May 2025, months <em>before</em> URL mode existed, not after it as I said.</li>
 </ul>
-<h2 id="current-state">Current State<a class="headerlink" href="#current-state" title="Permanent link">&para;</a></h2>
-<p>The project is in the very early stages. There are initial implementations for some pieces - encryption, vector storage, DID generation, contract structure - but plenty of GitHub issues waiting to be tackled. This is scaffolding, not a finished building.</p>
-<p>What's in place:
-- AES-256-GCM encryption with PBKDF2 key derivation
-- SQLite persistence with sqlite-vec for vector search
-- DID generation and management (did:key method)
-- Cardano smart contract validators (currently using Aiken)
-- TypeScript SDK for ZKP service integration</p>
-<p>What's coming:
-- Y.js CRDT sync across devices
-- Local embedding model integration
-- Full Midnight testnet deployment
-- Community node infrastructure</p>
-<h2 id="why-open-source">Why Open Source?<a class="headerlink" href="#why-open-source" title="Permanent link">&para;</a></h2>
-<p>The whole point of data sovereignty is that you don't have to trust anyone. Open source means you can verify. You can run it yourself. You can modify it. If I disappear tomorrow, the code still exists.</p>
-<p>Also: I can't build this alone. The intersection of local-first storage, small language models, zero-knowledge proofs, and smart contracts is genuinely hard. If this idea resonates with you, contributions are welcome.</p>
-<h2 id="get-involved">Get Involved<a class="headerlink" href="#get-involved" title="Permanent link">&para;</a></h2>
-<p>If any of this sounds interesting, have a poke around. The <a href="https://github.com/peteski22/pci-spec">pci-spec</a> repo has the S-PAL specification if you want to understand the policy language, and <a href="https://github.com/peteski22/pci-docs">pci-docs</a> explains how the layers fit together.</p>
-<p>I'd genuinely like this to be a community effort rather than a solo project. If you're into encrypted storage, local AI, ZKPs, Cardano, or just the broader data sovereignty question - open an issue, submit a PR, or just say hello. If there's enough interest I'll turn on GitHub Discussions so we have somewhere to chat that isn't issue trackers.</p>
-<p>Remember when you could buy something without handing over your life story? The corner shop model: you pay, you get the thing, transaction done. No loyalty card, no account, no "personalised experience" that's really just a profile being built on you. That's what we're trying to bring back - but for the AI era.</p>
+<p>The proposal also got a few things wrong:</p>
+<ul>
+<li>The GitHub, Grafana and Stripe MCP servers I cited in my examples were <code>stdio</code> servers, and so were following the spec in using environment variables</li>
+<li>I suggested sending a non-MCP token to the server: forbidden in the spec</li>
+<li>The "no passthrough" rule does have wide support outside MCP (for example, the <a href="https://datatracker.ietf.org/doc/draft-ietf-wimse-aims/">IETF WIMSE AIMS draft</a>)</li>
+<li>Probably myriad other things</li>
+</ul>
+<p>But, I say again (maybe for my pride, or ego) the real issue was that nothing said where the upstream token comes from.</p>
+<p>OK, so what changed in the months between rant and return-rant? MCP got a long list...</p>
+<p>URL mode elicitation, Enterprise-Managed Authorization (EMA), stateless protocol, header-based routing and <code>iss</code> validation... and Dynamic Client Registration (DCR) was deprecated and replaced with Client ID Metadata Documents (CIMD).</p>
+<p>The vendors I used as examples also moved towards using OAuth for their hosted servers (looking at you GitHub, Stripe, Grafana Cloud), but still use tokens for the local servers.</p>
+<p>They also seem to have agreed that there are still gaps to fill, from the <a href="https://modelcontextprotocol.io/development/roadmap">roadmap</a>:</p>
+<blockquote>
+<p>"MCP authorization assumes a person with a browser at consent time... Existing MCP servers lean on pasted API keys and long-lived refresh tokens."</p>
+</blockquote>
+<p>So where do things stand when it comes to my desire to have this upstream situation sorted?</p>
+<ul>
+<li>User with a browser: Covered via OAuth and <a href="https://modelcontextprotocol.io/extensions/auth/enterprise-managed-authorization">EMA</a>.</li>
+<li>Agent acting as itself (CI, workload): Draft <a href="https://modelcontextprotocol.io/extensions/auth/oauth-client-credentials">Client Credentials</a> and <a href="https://github.com/modelcontextprotocol/modelcontextprotocol/pull/1933">Workload Identity Federation SEP-1933</a>.</li>
+<li>Agent acting on behalf of a user who is not present: Partly covered by <a href="https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-assertion-authz-grant/">ID-JAG</a> with a refresh token after one login. There is no standard way to name the agent, no standard for a 2nd hop (upstream).</li>
+</ul>
+<p>Since the 2nd hop is a choice, and the Auth group has discussed changes that only affect 'server internals' as things that 'may not require MCP standardization at all' (<a href="https://github.com/modelcontextprotocol/modelcontextprotocol/discussions/2234">Auth group notes, Feb 2026</a>), what we see happening is that gateways (e.g. agentgateway, Cloudflare, ContextForge, Kong, Teleport etc.) fill the gap with their own formats, the result of which is that the identity travels upstream... differently in every product.</p>
+<p>And these gateways aren't going anywhere. Enterprises want one central place for audit, tool and MCP server RBAC, keeping secrets off developer machines, and of course a kill switch when needed. But central audit is only as good as the identity behind it. The gateway's log might say "Peter, using agent qwerty123, called create_issue on the GitHub server", but if the gateway then calls GitHub with one shared token, GitHub's own log just says "gateway_bot". GitHub's per-user permissions don't apply, GitHub can't revoke just me, and if that one token leaks, it works for everyone.</p>
+<p>ID-JAG seems like the new heir apparent, since seemingly moving from concept to production this year (2026), folks that have been interacting with the MCP ecosystem will have likely seen or heard of the 'Identity Assertion JWT Authorization Grant' (rolls right off the tongue doesn't it?); it's what MCP's EMA extension is built on top of.</p>
+<p><strong>TL;DR</strong>: Similar to when you land in another country and your phone just works without having to sign up to a local network. The foreign network asks your home network "is this one of yours, and are they allowed to roam?", and when it gets told 'yes' it lets you use it. The network back home controls your access, and can restrict you from anywhere. That's ID-JAG for applications, letting one application access another application's resources on your behalf without signing in again or approving every connection by hand.</p>
+<p>ID-JAG is supported in Okta and PingFederate, with others such as Keycloak, Auth0 and WorkOS starting to accept it (experimental or early access). So adoption is growing, although Microsoft Entra notably doesn't issue it, and goes its own way with on-behalf-of and Agent ID.</p>
+<p>But ID-JAG on its own doesn't close the gap:</p>
+<ul>
+<li>It can't be reused for the next system. The draft says a new one "MAY be issued", but not how a server in the middle should ask for one.</li>
+<li>The "who is acting" (<code>act</code>) field is optional, so the agent can drop out of the picture.</li>
+<li>Every app has to be set up to trust your IdP first.</li>
+</ul>
+<p>So, apart from that, is everything done, solved, hooray? Not quite yet... but we do trust our identity providers for all sorts of other things all the time:</p>
+<ul>
+<li>SSO: more or less every SaaS product will let your company IdP log people in.</li>
+<li>Cloud workload federation (AWS, GCP, Azure): Will take a signed token from an outside identity provider, e.g. GitHub Actions, and hand back short-lived API tokens (no static secrets!)</li>
+</ul>
+<p>'Oh yeah?' you might say, and, the IETF even has a name for when you do this across organisations: <a href="https://datatracker.ietf.org/doc/draft-ietf-oauth-identity-chaining/">Identity and Authorization Chaining Across Domains</a>.</p>
+<p>It's in the RFC Editor queue, so almost, almost there. And here's a bit I liked from a different draft, the <a href="https://datatracker.ietf.org/doc/draft-ietf-wimse-aims/">IETF WIMSE AI Identity Management System draft</a> (section <a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-aims-00#section-10.8">10.8</a>):</p>
+<blockquote>
+<p>"It is an anti-pattern for Tools to forward access tokens it received from the Agent to Services or Resources"</p>
+</blockquote>
+<p>But in that same section it points at identity chaining as the way for a tool to get a token for the next system:</p>
+<blockquote>
+<p>"When the Tool needs access to a resource protected by an authorization server other than the Tool's own authorization server, the OAuth Identity and Authorization Chaining Across Domains ([OAUTH-ID-CHAIN]) can be used to obtain an access token from the authorization server protecting that resource."</p>
+</blockquote>
+<p>So the "don't pass it through" rule <strong>and</strong> the "here's how you do the next hop" answer can live side by side. A handful of SaaS vendors (Slack, Linear, Atlassian and friends) already trust our IdPs via EMA, but only for their own MCP servers. What's missing is the rest of them doing the same, and for their APIs in general, so a gateway or server in the middle can make that next hop the same way cloud providers already let workloads do (not just logged-in humans).</p>
+<p>I don't care <strong>how</strong> it happens, but what I hope to see happen is:</p>
+<ul>
+<li>MCP documents one standard way for a server (or gateway) to make that 2nd hop built on things that already exist (the token exchange, the identity chaining, ID-JAG).</li>
+<li>The tokens have a shared format that carries who the user is, and which agent is acting on behalf of that user; so every product doesn't have to invent its own claims.</li>
+<li>A 1st class/standard path where we have agents working on behalf of users in a browserless setting.</li>
+<li>A 'best practices' document for gateways (the Auth group said back in February that this area was "somewhat underdocumented", and gateways are where a lot of enterprises are landing).</li>
+<li>More SaaS vendors accept assertions from customer IdPs like the cloud providers already do.</li>
+</ul>
+<p>The problem is on the MCP roadmap, progress is happening, this last step is about the same trust we already give to cloud APIs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If by some chance anyone who's part of the Auth group reads this blog post, can I highlight that the <a href="https://modelcontextprotocol.io/community/interest-groups/auth">Auth IG charter</a> says notes get cross-posted to GitHub Discussions. Please post the Auth group notes to GitHub again. The last ones there are from Feb 2026.</p>
+</div>
 
 
 
