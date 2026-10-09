@@ -11,6 +11,9 @@ categories:
 
 # MCP's Identity Crisis: When Security Theatre Meets Enterprise Reality
 
+!!! note "Update: November 2026"
+    I've written a [follow-up to this post](99-problems-but-mcp-got-1.md). It corrects some things I got wrong here and covers what has changed in MCP since.
+
 The Model Context Protocol (MCP) promises to be the "USB-C" of LLM integrations; simple, universal, and "extremely easy to build." Yet a fundamental disconnect exists between its security guidance and how authentication works in production systems. This isn't just a theoretical concern; it's creating an ecosystem where even official implementations can't follow the stated best practices.
 
 <!-- more -->
@@ -194,7 +197,7 @@ This isn't the first time these concerns have been raised. The GitHub discussion
 
 * **Discussion [#234](https://github.com/modelcontextprotocol/modelcontextprotocol/discussions/234)** (by @wdawson) proposed exactly what enterprises need: passing user tokens at the tool level to enable multi-user scenarios. It was closed after URL mode was merged, despite URL mode not addressing the core concerns.
 
-* **Issue [#195](https://github.com/modelcontextprotocol/modelcontextprotocol/issues/)** suggested using standard WWW-Authenticate headers and allowing clients to pass tokens directly. Sixteen developers agreed. No action taken.
+* **Issue [#195](https://github.com/modelcontextprotocol/modelcontextprotocol/issues/195)** suggested using standard WWW-Authenticate headers and allowing clients to pass tokens directly. Sixteen developers agreed. No action taken.
 
 * **Discussion [#804](https://github.com/modelcontextprotocol/modelcontextprotocol/discussions/804)** proposed a gateway-based model that would work with enterprise architectures. Still under discussion, likely to be superseded by URL mode.
 
