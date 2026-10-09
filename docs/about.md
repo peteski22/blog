@@ -9,7 +9,11 @@ My career has focused on building infrastructure and tooling that enables engine
 ### Current
 
 **Mozilla.ai** - Staff Engineer (2024-Present)
-Building trustworthy AI infrastructure. Creator of [mcpd](https://github.com/mozilla-ai/mcpd), a tool for managing MCP servers across environments—bridging the gap between "works on my laptop" and production-ready deployments in real organizations.
+Building open infrastructure for AI agents.
+
+- **[cq](https://github.com/mozilla-ai/cq)**: an open standard for shared agent learning. Agents store and query what other agents have already learned, so they stop rediscovering the same failures on their own. Think "Stack Overflow, but for agents". I started it and lead it. It plugs into Claude Code, GitHub Copilot, Cursor and other agent hosts, and [cq exchange](https://cq.exchange) (launched May 2026) is Mozilla.ai's hosted service built on top of it. I've talked about it at AI Native DevCon London and on GitHub's Open Source Friday.
+- **apron**: small libraries for the plumbing every product ends up needing. [apron-auth](https://github.com/mozilla-ai/apron-auth) handles the OAuth protocol side (PKCE, code exchange, token refresh and revocation), and [apron-tools](https://github.com/mozilla-ai/apron-tools) wraps provider APIs with typed schemas, OAuth scope mappings and LLM function-calling definitions.
+- **[mcpd](https://github.com/mozilla-ai/mcpd)**: a tool to declare and run MCP servers the same way from a laptop to production, with SDKs in Python, .NET, Go and Rust. It's also where my [thoughts on MCP identity](posts/mcp-identity-crisis.md) came from.
 
 ### Previous Experience
 
