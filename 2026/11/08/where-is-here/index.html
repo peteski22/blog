@@ -1,0 +1,976 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Thoughts on distributed systems, authentication, and protocol design">
+      
+      
+      
+        <link rel="canonical" href="https://peteski22.github.io/blog/2026/11/08/where-is-here/">
+      
+      
+        <link rel="prev" href="../../../10/09/i-got-99-problems-but-mcp-got-1/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Where is "here"? - Technical Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/panzoom.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <meta name="panzoom-theme" content="material">
+<meta name="panzoom-data" content='{"selectors": [".d2", ".mermaid"], "initial_zoom_level": 1.0}'> </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#where-is-here" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Technical Blog" class="md-header__button md-logo" aria-label="Technical Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Technical Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Where is "here"?
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Technical Blog" class="md-nav__button md-logo" aria-label="Technical Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Technical Blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2026/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Categories
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Categories
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/identity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Identity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/infrastructure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/open-source/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Open Source
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/privacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Privacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../.." class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="https://github.com/peteski22.png" alt="Peter Wilson">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          Peter Wilson
+                        
+                      </strong>
+                      <br>
+                      Staff Engineer
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2026-11-08 00:00:00+00:00" class="md-ellipsis">November 8, 2026</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../../../../category/ai/">AI</a>, 
+                              <a href="../../../../category/architecture/">Architecture</a>, 
+                              <a href="../../../../category/privacy/">Privacy</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              8 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+
+
+<h1 id="where-is-here">Where is "here"?<a class="headerlink" href="#where-is-here" title="Permanent link">&para;</a></h1>
+<p>During the budget announcement at the end of the October 2026, Chancellor John Healey did what almost all of us do nowadays; he talked about AI. <a href="https://www.bbc.co.uk/news/articles/cq4g14e35rrko">He said</a> a lot of things that gave me pause to think, but one thing stuck out...</p>
+<blockquote>
+<p>"When the NHS uses AI to treat patients, we want that data here, when our armed forces use AI to keep us safe, we want that data <strong>here</strong>."</p>
+</blockquote>
+<!-- more -->
+
+<p>I  have previously written about <a href="https://peteski22.github.io/blog/2026/02/04/ai-growth-zones-gift-horse-or-trojan-horse/">my concerns</a> over what was being popularised as 'the norm' with data centres; namely that they supposedly great for regions, communities, for jobs and the economy. With all this good news and opportunity, it gives me some hope that we're seeing push back from citizens that have started to realise that maybe these gigantic blights aren't all they're cut out to be. Whilst the current opposition to them is for very real and grounded reasons (noise, energy bills etc.), I feel that now the covers have been somewhat pulled back, and the general public are open to the idea that maybe, just maybe these data centres, and the companies behind them, don't have your best interests at heart; then we should start to talk more about the other issues with them that seem more more abstract and 'far away'...</p>
+<p>All this to say that when John Healey said "we want that data here" I believe he was trying to strike a patriotic tone, one intended to reduce the backlash to these data centres; but in fact was actually helping to make the argument about exactly why ownership of data centres and their data is so important to the UK, or any sovereign nation for that matter. And when we hear someone say "here", that should mean not just a physical location, but a shared social, or even cultural space in a community. When someone in a community tells someone "we don't accept racism around <strong>here</strong>" what they are referring to is the social fabric, a social contract. </p>
+<p>When Healey says it he means that the data is physically here on UK soil, but when you scrutinise that you see:</p>
+<ul>
+<li>The <strong>site</strong>: the former Britishvolt land at Cambois, bought by Blackstone after Britishvolt collapsed.</li>
+<li>The <strong>operator</strong>: QTS Data Centers, a US company headquartered in Overland Park, Kansas. QTS builds and runs the halls.</li>
+<li>The <strong>owner</strong>: Blackstone, the New York private-equity firm, bought QTS outright in 2021. So Blackstone owns the operator, and its investors' money (pension funds, among others) is what the £10bn figure refers to.</li>
+<li>The <strong>customer</strong>: QTS builds for hyperscale tenants, and no tenant for Cambois has been named; QTS declined to comment when <a href="https://www.fdiintelligence.com/content/ba4a170c-b871-4d89-b381-f3d56eeb7403">fDi Intelligence</a> asked back in May 2026</li>
+</ul>
+<p>For me, sovereignty isn't a border. It's a nation, a region, a town and a household each having the same say over what's done with what's theirs, and who will answer for it, and it binds each layer together, in order to look out for the ones below. Healey's mistake isn't caring about the national layer; it's that he stopped there, and not being honest that “here” also has to mean something to the people whose back gardens finish at the boundary fence of the data centres.</p>
+<p>Coincidentally, the government also published <a href="https://www.gov.uk/government/publications/data-centre-covenant/the-data-centre-covenant">The Data Centre Covenant</a> on the same day that budget announcement went out. This non-binding policy paper seems to be aimed at trying to assuage voters that it will all be fine and a few adjustments here and there will resolve all the problems. Notice what's in it (water, bills, a Local Benefit Plan) and what isn't: not one word about who owns data centres. </p>
+<p>I read a great article by a new associate of mine, and genuinely nice guy <a href="https://substrate.dougbelshaw.com/who-owns-the-north-easts-ai-economy">Doug Belshaw</a>; in which he argues that a data centre means hosting someone else's infrastructure, and reminds us that the North East has been here before: Siemens' £1.1bn North Tyneside plant opened in 1997 and was closed from Munich fifteen months later, taking 1,100 jobs with it. I find it fascinating that two people's lives, that until only a few weeks ago had never crossed paths; that both grew up a few miles from the same site of a upcoming data centre; both drew a lot of parallels about what this means, and what is important for the communities they come from to truly prosper in this 'AI Age'.</p>
+<hr />
+<p>We're already seeing that companies are finding ways (sometimes aided by government) to try and appease citizens with the serious concerns they are having when it comes to data centres. The script seems to go a little like this:</p>
+<p>... Water? Use a closed-loop.</p>
+<blockquote>
+<p>"data centres can be cooled with closed loop systems that, when operational, use about as much water as an office complex"</p>
+</blockquote>
+<p>... Noise and emissions? The generators will be quiet.</p>
+<blockquote>
+<p>"Similarly, other systems can dramatically mitigate noise and emissions from standby generators that only run for a few hours a month."</p>
+</blockquote>
+<p>... Jobs? Hire some locals for security/admin/maintenance once the data centre is running</p>
+<blockquote>
+<p>It claimed the facility would bring 1,050 "direct, indirect and induced jobs once operational" and "thousands more" during construction, but did not explain how the figures were compiled.</p>
+</blockquote>
+<p>(All the quotes come directly from <a href="https://www.bbc.co.uk/news/articles/crgqwwn8vq58o">the BBC's: Data centre plan 'further blow', say campaigners</a>).</p>
+<p>These things may sound like they're a step in the right direction, maybe they are; but the problem is we're not addressing the root cause. All the concerns being raised are real, but what we're seeing is attempts to treat the symptoms and not the disease. </p>
+<p>For example, only running the generators a few hours per month sounds sensible, but what about the other 'normal operation' times when fans, coolers, transformer hum have to run 24/7? Intermittent quiet generators are fine but <a href="https://www.eesi.org/articles/view/communities-are-raising-noise-pollution-concernsabout-data-centers">other types of sound are causing health concerns</a>. There might be 'some' local jobs, but nowhere near what people expect or are led to believe. It makes sense that expert data centre builders will be brought in to handle build outs, it's what happens everywhere. You don't have a local wind turbine engineer that pops a few miles out to see to fix a turbine, you fly people around the world for specialist work. Indeed a report by <a href="https://www.brookings.edu/articles/new-evidence-on-data-center-employment-effects/">Brookings</a> on data centre employment suggests a typical US county that gets its first large data centre adds roughly <strong>100 to 200</strong> jobs over a <strong>decade</strong></p>
+<p>The thing is, in the grand scheme of things these 'mitigations' don't cost the developers much and if they tick enough boxes, then there comes a point where a council can't reasonably object because the aforementioned Data Centre Covenant commits to a National Policy Statement that puts the biggest sites through the national infrastructure regime, where the decision is the Secretary of State's and not the council's, and sets up a 'Ministerial Control Centre' chaired by the Minister for AI to speed strategic sites through planning.</p>
+<p>Equally as damning is that even after years of upcoming construction locals won't even know who will operate a data centre or who's workloads are going to be processed there. <a href="https://www.bbc.co.uk/news/articles/crgqwwn8vq58o">Tract told the BBC</a> it "does not know at this time" who might operate the facility.</p>
+<p>We're seeing a pattern here, so it's not just South Hetton. Looking at Cambois, the flagship AI Growth Zone site, the one the government likes to talk about: a £10bn campus of 10 data centres, with ground works already started in October 2025. Then in May 2026 the developer asked the council if they could speed things up, and in that very planning statement they admit to "limited certainty regarding the detailed delivery strategy and phasing programme associated with data centres five to 10". So that's 4 data centres with a plan, and 6 with a maybe... but the headline figure stays at £10bn. It even has a code name (Project Wind), but still no customer.</p>
+<p>You might ask 'What has the community got out of it so far?'</p>
+<ul>
+<li>A garden for the village primary school</li>
+<li>Sponsorship for a non-league football club</li>
+<li>40 people trained in construction skills</li>
+</ul>
+<p>Which is nice, it's better than nothing. But against <strong>£10bn</strong>?</p>
+<p>The local MP has seen this area lose its pits, its power stations and then a battery factory that never got built. He says local people must come first, and that he wants people to "<em>feel</em>" that the investment benefits the local economy. I genuinely think he means it. The problem is that 'wanting' is about all he can do. He can't pick the tenant, he can't put conditions on who owns it, and he can't stop it being sold on to the next investment firm with a spare £10bn. Jobs are what gets promised because jobs are the only thing on the table; as Doug mentioned in his article, they were the only thing on the table when Siemens turned up in 1997 as well.</p>
+<p>Once a data centre is commissioned, there's also a serious concern that "here" doesn't really mean here (go figure huh). Since the <a href="https://en.wikipedia.org/wiki/CLOUD_Act">US CLOUD Act</a> (2018) means US authorities can compel a service provider subject to US jurisdiction to produce data within its possession, custody or control, regardless of where that data is physically stored. Worrying? Just remember that NHS data is <strong>already</strong> being handled by <a href="https://blog.palantir.com/palantir-and-the-nhs-dd1362982fa9">Palantir</a> (a US company), hosted on Amazon's AWS (a US company) and Microsoft's Azure (a US company): physically hosted here in the UK, but legally accessible to the US government by court order.</p>
+<hr />
+<p>Which brings us back to my opening gambit, the title of this post, where is "here"? Put simply, who can be ordered to hand over your data, and what would they actually be handing over?</p>
+<ul>
+<li>A server in Northumberland, run from Kansas, owned from New York, with a customer nobody will name, for me, fails that test. </li>
+<li>A machine in your house passes it. </li>
+<li>A rack in your local library or co-working space, run by people whose names you know, passes it. </li>
+</ul>
+<p>That's what I mean by sovereignty 'all the way down'. If we look at root causes, real reasons, actual problems to solve, what do most people actually want from AI? Drafting emails, searching documents, asking questions about your own life? Being able to do this without conceding your land, your environment; without handing over your intimate, personal, contextual data. Being able to do all of this with open source, open weight models that let you keep yourself to yourself?</p>
+<p>I'd argue that we could give this to people without a gigawatt warehouse shed. </p>
+<p>I'd argue that we could give this to people with hardware that would fit in a cupboard.</p>
+<p>Huge AI data centres aren't answering a root cause, they're dictating that your data has to leave you, it has to make money for someone else. Nobody in government seems willing to say this out loud.</p>
+<p>I think Doug is working on this from the top down: what should a region ask for, what should a council refuse, what does ownership look like in economic terms. I've been working on it from the bottom up (in my spare time): what does it look like in software when your data stays yours and a policy you wrote decides what leaves. That's <a href="https://freehold.earth">Freehold</a> (the artist formerly known as PCI). It's about trying to get things moving in code, about trying to get things moving amongst like-minded people. This is something real that we can try to do to take back some control of our data, and the narrative; and I'm already finding more and more like minded folks (Shout out to the folks at <a href="https://z-space.ca/about/">Z-Space</a> working on <a href="https://sharedcomputer.network/about/">Shared Computer Network</a>).</p>
+<p>John Healey said he wants that data here. So do I. We just disagree about where here is.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      All views and opinions expressed on this site are my own and do not represent the views of my employer or any organizations I am affiliated with.
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../../../assets/javascripts/panzoom.min.js"></script>
+      
+        <script src="../../../../assets/javascripts/zoompan.js"></script>
+      
+    
+  </body>
+</html>
