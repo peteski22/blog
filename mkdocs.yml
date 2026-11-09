@@ -1,30 +1,49 @@
-site_name: Technical Blog
-site_description: Thoughts on distributed systems, authentication, and protocol design
+site_name: Peter Wilson
+site_description: Peter Wilson writes about software systems, security, and the policy around them.
 site_url: https://peteski22.github.io/blog/
 copyright: >
   All views and opinions expressed on this site are my own and do not represent the views of my employer or any organizations I am affiliated with.
 
 theme:
   name: material
+  custom_dir: overrides
+  font:
+    text: IBM Plex Sans
+    code: IBM Plex Mono
   features:
-    - navigation.sections
-    - navigation.expand
+    - navigation.tabs
     - navigation.top
     - content.code.copy
   palette:
-    - scheme: default
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
-    - scheme: slate
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
       toggle:
         icon: material/brightness-4
-        name: Switch to light mode
+        name: Follow system preference
+
+extra_css:
+  - stylesheets/theme.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/peteski22
+      name: peteski22 on GitHub
 
 plugins:
   - search
   - blog:
       blog_dir: .
+      post_readtime_words_per_minute: 220
   - mermaid2
   - panzoom:
       full_screen: true

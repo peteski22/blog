@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap");
+
+/* Design tokens. Every other stylesheet reads these and never hard-codes a
+   color or a width. */
+
+:root {
+  --pw-font-serif: "IBM Plex Serif", Georgia, serif;
+
+  --pw-col: 45rem;
+  --pw-col-wide: 55rem;
+  --pw-chrome: 67.5rem;
+}
+
+[data-md-color-scheme="default"] {
+  --pw-bg: #fcfcfb;
+  --pw-surface: #f1f1ef;
+  --pw-ink: #121315;
+  --pw-muted: #71757c;
+  --pw-faint: #9b9fa6;
+  --pw-rule: #11121412;
+  --pw-accent: #0b5d51;
+}
+
+[data-md-color-scheme="slate"] {
+  --pw-bg: #101113;
+  --pw-surface: #1a1b1e;
+  --pw-ink: #e8e9eb;
+  --pw-muted: #969ca4;
+  --pw-faint: #6e747c;
+  --pw-rule: #ffffff17;
+  --pw-accent: #56b8a6;
+}
+
+/* NOTE: Material's own rules read the --md-* names, so each token has to be
+   mapped onto the variable a rule consumes. Setting a token material derives
+   another from does not change the derived one. */
+
+[data-md-color-scheme="default"],
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: var(--pw-bg);
+  --md-default-fg-color: var(--pw-ink);
+  --md-default-fg-color--light: var(--pw-muted);
+  --md-default-fg-color--lighter: var(--pw-faint);
+  --md-default-fg-color--lightest: var(--pw-rule);
+
+  --md-typeset-color: var(--pw-ink);
+  --md-typeset-a-color: var(--pw-accent);
+  --md-accent-fg-color: var(--pw-accent);
+
+  /* The header and the active tab take the page background, so the top of the
+     page is not a colored bar. */
+  --md-primary-fg-color: var(--pw-bg);
+  --md-primary-fg-color--light: var(--pw-bg);
+  --md-primary-fg-color--dark: var(--pw-bg);
+  --md-primary-bg-color: var(--pw-ink);
+  --md-primary-bg-color--light: var(--pw-muted);
+
+  --md-code-bg-color: var(--pw-surface);
+  --md-code-fg-color: var(--pw-ink);
+
+  --md-footer-bg-color: var(--pw-bg);
+  --md-footer-bg-color--dark: var(--pw-bg);
+  --md-footer-fg-color: var(--pw-ink);
+  --md-footer-fg-color--light: var(--pw-faint);
+  --md-footer-fg-color--lighter: var(--pw-faint);
+}
