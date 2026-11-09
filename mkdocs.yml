@@ -30,6 +30,9 @@ theme:
         icon: material/brightness-4
         name: Follow system preference
 
+hooks:
+  - hooks.py
+
 extra_css:
   - stylesheets/theme.css
   - stylesheets/layout.css
@@ -71,3 +74,5 @@ markdown_extensions:
 nav:
   - Home: index.md
   - About: about.md
+  - Archive: archive.md
+  - Categories: categories.md
