@@ -1,0 +1,215 @@
+/* Prose, code and wide content.
+
+   Sizes are em of the typeset base so the whole scale moves with material's
+   root font-size steps at 100em and 125em. */
+
+.md-typeset {
+  font-size: 0.875rem;
+  line-height: 1.78;
+}
+
+.md-typeset h1 {
+  color: var(--pw-ink);
+  font-size: 1.9em;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.032em;
+  margin: 0 0 0.6em;
+}
+
+/* Uppercase and letter-spaced, but large enough to read as a section
+   heading rather than a caption. A post can carry a dozen of these. */
+.md-typeset h2 {
+  font-size: 1.15em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pw-ink);
+  margin: 2.6em 0 0.9em;
+}
+
+.md-typeset h3 {
+  font-size: 1.05em;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.4;
+  margin: 2.2em 0 0.5em;
+}
+
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+.md-typeset p {
+  margin: 0 0 1.25em;
+}
+
+/* Links are body text plus an underline. The underline carries the
+   affordance, so no color is needed. */
+.md-typeset a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--pw-faint);
+  text-underline-offset: 3px;
+}
+
+.md-typeset a:hover,
+.md-typeset a:focus {
+  text-decoration-color: var(--pw-ink);
+}
+
+.md-typeset ul,
+.md-typeset ol {
+  margin-bottom: 1.25em;
+}
+
+.md-typeset li {
+  margin-bottom: 0.4em;
+}
+
+/* An opt-in summary line. Put `{ .lede }` on its own line after the
+   paragraph; attr_list turns that into this class. */
+.md-typeset p.lede {
+  font-family: var(--pw-font-serif);
+  font-size: 1.14em;
+  line-height: 1.56;
+  color: var(--pw-muted);
+  max-width: 34em;
+}
+
+[dir="ltr"] .md-typeset blockquote,
+.md-typeset blockquote {
+  border-left: 0.1rem solid var(--pw-faint);
+  padding-left: 1rem;
+  margin: 2.2em 0;
+  font-size: 1.1em;
+  line-height: 1.6;
+  letter-spacing: -0.008em;
+  color: var(--pw-muted);
+}
+
+.md-typeset blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.md-typeset hr {
+  border-bottom-color: var(--pw-rule);
+  margin: 2.4em 0;
+}
+
+/* Code */
+
+.md-typeset code {
+  font-size: 0.78em;
+  border-radius: 0.1rem;
+  box-shadow: none;
+}
+
+/* Monospace set at the body ratio looks undersized inside a heading. */
+.md-typeset h1 code,
+.md-typeset h2 code,
+.md-typeset h3 code,
+.md-typeset h4 code {
+  font-size: 0.92em;
+}
+
+.md-typeset pre:not(.mermaid) > code {
+  border: 1px solid var(--pw-rule);
+  border-radius: 0.2rem;
+  line-height: 1.65;
+}
+
+.md-typeset .highlight span.filename {
+  background: var(--pw-surface);
+  border-bottom: 1px solid var(--pw-rule);
+  font-family: var(--md-code-font-family);
+  font-size: 0.7em;
+}
+
+/* Tables */
+
+/* NOTE: Material pads the table wrapper and sizes both it and the table as
+   inline-block, so the table shrink-wraps and sits inset from the column.
+   min-width lets it fill the measure while still scrolling when wider. */
+.md-typeset__table {
+  display: block;
+  padding: 0;
+}
+
+.md-typeset table:not([class]) {
+  border: 1px solid var(--pw-rule);
+  box-shadow: none;
+  font-size: 0.8em;
+  min-width: 100%;
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--pw-surface);
+  color: var(--pw-ink);
+  font-weight: 600;
+}
+
+.md-typeset table:not([class]) td {
+  border-top-color: var(--pw-rule);
+}
+
+/* Wide content.
+
+   NOTE: Material sets overflow:auto on pre > code and overflow-x:auto on
+   .md-typeset__scrollwrap. Nothing here may override those: they are what
+   keeps a wide table or a long line inside the column instead of widening
+   the page. Nothing breaks out of the reading measure. */
+
+/* NOTE: Material sizes a figure to fit-content, so a diagram shrink-wraps to
+   its natural width and sits narrower than the prose. */
+.md-typeset figure {
+  width: auto;
+}
+
+.md-typeset .panzoom-box,
+.md-typeset .mermaid {
+  width: 100%;
+}
+
+/* Material gives the table wrapper negative side margins, which push it
+   wider than the reading measure. */
+.md-typeset__scrollwrap {
+  margin-inline: 0;
+}
+
+/* NOTE: Mermaid writes an inline max-width on the SVG, in pixels, which caps
+   a wide diagram far below the column. An inline style can only be overridden
+   with !important. The viewBox makes the scaling proportional. */
+.md-typeset .mermaid svg {
+  width: 100%;
+  height: auto;
+  max-width: 100% !important;
+}
+
+.md-typeset .panzoom-box,
+.md-typeset pre:has(> svg) {
+  background: var(--pw-figure-bg);
+  border: 1px solid var(--pw-rule);
+  border-radius: 0.2rem;
+  margin: 1.8em 0;
+  padding: 0.8rem;
+}
+
+.md-typeset .panzoom-box pre {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.md-typeset .panzoom-button {
+  color: var(--pw-faint);
+}
+
+.md-typeset .panzoom-icon {
+  fill: var(--pw-faint);
+}

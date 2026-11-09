@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap");
+
+/* Design tokens. Every other stylesheet reads these and never hard-codes a
+   color or a width. */
+
+:root {
+  --pw-font-serif: "IBM Plex Serif", Georgia, serif;
+
+  /* NOTE: Material sets html{font-size:125%}, so 1rem is 20px here, not 16px.
+     These are the mockup's pixel widths divided by 20. */
+  --pw-gutter: 1.8rem;
+
+  --pw-col: 36rem;
+  --pw-chrome: 54rem;
+}
+
+[data-md-color-scheme="default"] {
+  --pw-bg: #fcfcfb;
+  --pw-surface: #f1f1ef;
+  --pw-ink: #121315;
+  --pw-muted: #5f646b;
+  --pw-faint: #6e737a;
+  --pw-rule: #11121412;
+  --pw-accent: #0b5d51;
+
+  --pw-adm-amber: #8a6a1f;
+  --pw-adm-neutral: #5b656f;
+  --pw-adm-red: #8d2f24;
+
+  --pw-figure-bg: var(--pw-surface);
+}
+
+[data-md-color-scheme="slate"] {
+  --pw-bg: #1e2125;
+  --pw-surface: #262a2f;
+  --pw-ink: #e8e9eb;
+  --pw-muted: #aab1b9;
+  --pw-faint: #8d949c;
+  --pw-rule: #ffffff17;
+  --pw-accent: #56b8a6;
+
+  --pw-adm-amber: #bd954a;
+  --pw-adm-neutral: #737c87;
+  --pw-adm-red: #d0796c;
+
+  /* NOTE: Diagrams keep a light face in dark mode, the way a photograph
+     would. Posts hard-code pale subgraph fills, so inverting the labels
+     would leave light text on a light shape. */
+  --pw-figure-bg: #f3f3f1;
+  --md-mermaid-label-bg-color: #f8f8f6;
+  --md-mermaid-label-fg-color: #1e2125;
+  --md-mermaid-node-bg-color: #e7e9e4;
+  --md-mermaid-node-fg-color: #1e2125;
+  --md-mermaid-edge-color: #4a4f57;
+}
+
+/* NOTE: Material's own rules read the --md-* names, so each token has to be
+   mapped onto the variable a rule consumes. Setting a token material derives
+   another from does not change the derived one. */
+
+/* NOTE: The second attribute is for specificity, not for matching. Material's
+   palette sets some of these under [data-md-color-scheme=X][data-md-color-primary=Y],
+   so a single-attribute rule here loses and silently does nothing. Every page
+   carries both attributes. */
+[data-md-color-scheme="default"][data-md-color-primary],
+[data-md-color-scheme="slate"][data-md-color-primary] {
+  --md-default-bg-color: var(--pw-bg);
+  --md-default-fg-color: var(--pw-ink);
+  --md-default-fg-color--light: var(--pw-muted);
+  --md-default-fg-color--lighter: var(--pw-faint);
+  --md-default-fg-color--lightest: var(--pw-rule);
+
+  --md-typeset-color: var(--pw-ink);
+  /* NOTE: The accent is reserved for admonitions. Links, focus rings and
+     mermaid node fills take the body ink, so color carries meaning in one
+     place rather than decorating the whole page. */
+  --md-typeset-a-color: var(--pw-ink);
+  --md-accent-fg-color: var(--pw-ink);
+  /* NOTE: Material declares this as a standalone literal, not derived from
+     the foreground, so setting the foreground alone leaves it unchanged.
+     Mermaid node fills read it. */
+  --md-accent-fg-color--transparent: color-mix(in srgb, var(--pw-ink) 8%, transparent);
+
+  /* The header and the active tab take the page background, so the top of the
+     page is not a colored bar. */
+  --md-primary-fg-color: var(--pw-bg);
+  --md-primary-fg-color--light: var(--pw-bg);
+  --md-primary-fg-color--dark: var(--pw-bg);
+  --md-primary-bg-color: var(--pw-ink);
+  --md-primary-bg-color--light: var(--pw-muted);
+
+  --md-code-bg-color: var(--pw-surface);
+  --md-code-fg-color: var(--pw-ink);
+
+  --md-footer-bg-color: var(--pw-bg);
+  --md-footer-bg-color--dark: var(--pw-bg);
+  --md-footer-fg-color: var(--pw-ink);
+  --md-footer-fg-color--light: var(--pw-faint);
+  --md-footer-fg-color--lighter: var(--pw-faint);
+}

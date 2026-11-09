@@ -1,0 +1,138 @@
+/* The post list on the index, archive and category pages. */
+
+.md-post--excerpt .md-post__authors,
+.md-post__authors {
+  display: none;
+}
+
+.md-post--excerpt {
+  border-top: 1px solid var(--pw-rule);
+  padding: 1.9rem 0 0;
+  margin: 0;
+}
+
+.md-post--excerpt:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.md-post__header {
+  display: block;
+  padding: 0;
+}
+
+.md-post__meta.md-meta {
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  color: var(--pw-faint);
+  margin-bottom: 0.45rem;
+}
+
+.md-post__meta .md-meta__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.5rem;
+}
+
+/* NOTE: Material already separates these with an ::after on every item but
+   the last. Replace it rather than adding a second mark, and keep the
+   template's own order, because an `order` property moves the box while the
+   pseudo-element stays bound to its DOM position. */
+.md-post__meta .md-meta__item:not(:last-child)::after {
+  content: none;
+}
+
+.md-post__meta .md-meta__item + .md-meta__item::before {
+  content: "·";
+  margin-right: 0.5rem;
+  opacity: 0.55;
+}
+
+.md-post__meta .md-meta__link {
+  color: var(--pw-faint);
+}
+
+.md-post__meta .md-meta__link:hover {
+  color: var(--pw-ink);
+}
+
+.md-post__content > h1,
+.md-post__content > h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.024em;
+  line-height: 1.26;
+  text-transform: none;
+  color: var(--pw-ink);
+  margin: 0 0 0.5rem;
+  border: none;
+}
+
+.md-post__content > h1 > a,
+.md-post__content > h2 > a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.md-post__content > h1 > a:hover,
+.md-post__content > h2 > a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.md-post__content > p {
+  color: var(--pw-muted);
+  max-width: 36em;
+}
+
+.md-post__action {
+  margin-top: 0.3rem;
+}
+
+.md-post__action a {
+  font-family: var(--md-code-font-family);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  color: var(--pw-muted);
+  text-decoration: none;
+}
+
+.md-post__action a:hover {
+  color: var(--pw-ink);
+}
+
+.md-post__action a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* One meta line above a post title, from overrides/blog-post.html. */
+
+.pw-postmeta {
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  color: var(--pw-faint);
+  margin-bottom: 1.4rem;
+}
+
+.pw-postmeta > * + *::before {
+  content: "·";
+  margin: 0 0.5rem;
+  opacity: 0.55;
+}
+
+.pw-postmeta a {
+  color: var(--pw-faint);
+  text-decoration: none;
+}
+
+.pw-postmeta a:hover {
+  color: var(--pw-ink);
+}

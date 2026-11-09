@@ -1,0 +1,194 @@
+/* Page frame: header, navigation, reading column, footer. */
+
+.md-grid {
+  max-width: var(--pw-chrome);
+}
+
+/* The max-width carries the gutter, so the text measure is exactly --pw-col.
+
+   NOTE: The min() is load-bearing. On a post page material makes
+   .md-content a flex container, and a flex item with auto cross-axis
+   margins is sized to its content, not to the viewport, so a bare
+   max-width lets a wide code block push the page sideways on a phone. */
+.md-content__inner {
+  max-width: min(calc(var(--pw-col) + 2 * var(--pw-gutter)), 100%);
+  padding: 1.5rem var(--pw-gutter) 4rem;
+}
+
+/* Centering the column means beating material's own margin rules, which are
+   written at five levels of specificity. Each group below mirrors one of
+   them so that source order decides. */
+.md-content__inner,
+[dir="ltr"] .md-content--post > .md-content__inner,
+[dir="ltr"] .md-sidebar--primary:not([hidden]) ~ .md-content > .md-content__inner,
+[dir="ltr"] .md-sidebar--secondary:not([hidden]) ~ .md-content > .md-content__inner {
+  margin-inline: auto;
+}
+
+.md-content__inner::before {
+  display: none;
+}
+
+/* NOTE: Below 76.25em material turns .md-sidebar--primary into the slide-out
+   drawer, which is a phone's only navigation. Hiding it unscoped removes
+   that. .md-sidebar--secondary is the right-hand table of contents, which
+   this design drops. */
+@media screen and (min-width: 76.25em) {
+  /* :not([hidden]) matches material's own display rule, which would
+     otherwise win and show the table of contents. */
+  .md-sidebar--primary:not([hidden]),
+  .md-sidebar--secondary:not([hidden]) {
+    display: none;
+  }
+
+}
+
+/* Header */
+
+.md-header {
+  box-shadow: none;
+}
+
+/* The default glyph is a generic book. It is hidden in the header and in the
+   mobile drawer, which render it from different class names. */
+.md-header__button.md-logo,
+.md-nav--primary .md-nav__title .md-logo {
+  display: none;
+}
+
+/* The drawer title indents to clear the glyph that is no longer there. */
+.md-nav--primary .md-nav__title {
+  padding-left: 0.8rem;
+}
+
+.md-header__title {
+  font-weight: 600;
+  letter-spacing: -0.012em;
+}
+
+.md-header__topic:first-child {
+  font-weight: 600;
+}
+
+.md-search__form {
+  background: var(--pw-surface);
+  border: 1px solid var(--pw-rule);
+  border-radius: 0.2rem;
+  box-shadow: none;
+}
+
+.md-search__form:hover {
+  background: var(--pw-surface);
+}
+
+/* Tabs carry the only hairline under the masthead. */
+
+.md-tabs {
+  border-bottom: 1px solid var(--pw-rule);
+}
+
+/* Both rows start one gutter in, matching the chrome in the design. The
+   masthead adds .md-header__inner's 0.2rem padding; the tab row adds
+   .md-tabs__item's 0.6rem padding.
+
+   NOTE: Material sets these margins under a [dir=ltr] prefix, so a plain
+   class selector loses on specificity and silently does nothing. The prefix
+   is required here, and it is correct, because the value is direction
+   dependent. */
+[dir="ltr"] .md-header__title {
+  margin-left: calc(var(--pw-gutter) - 0.2rem);
+}
+
+[dir="ltr"] .md-tabs__list {
+  margin-left: calc(var(--pw-gutter) - 0.6rem);
+}
+
+.md-tabs__link {
+  font-family: var(--md-code-font-family);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--pw-muted);
+  opacity: 1;
+  margin-top: 0.6rem;
+}
+
+.md-tabs__link:hover,
+.md-tabs__link--active {
+  color: var(--pw-ink);
+}
+
+.md-tabs__item--active .md-tabs__link {
+  color: var(--pw-ink);
+  box-shadow: 0 0.12rem 0 var(--pw-ink);
+}
+
+/* Footer */
+
+.md-footer {
+  border-top: 1px solid var(--pw-rule);
+}
+
+/* NOTE: Material gives .md-copyright width:100%, which makes the social
+   icons wrap onto their own line. Let the two share one row, with the icons
+   pushed to the right edge. */
+.md-footer-meta__inner {
+  align-items: flex-start;
+  gap: 0.4rem 1.6rem;
+  padding: 0.8rem var(--pw-gutter) 1.6rem;
+}
+
+/* The disclaimer wraps at a readable measure rather than running on until it
+   meets the icons. balance evens the line lengths and keeps the last word off
+   a line of its own. */
+.md-copyright {
+  width: auto;
+  flex: 0 1 auto;
+  max-width: 64ch;
+  margin: 0;
+  padding: 0;
+  order: 1;
+}
+
+.md-copyright__highlight {
+  text-wrap: balance;
+  margin-bottom: 0.35rem;
+}
+
+.md-social {
+  margin-left: auto;
+  order: 2;
+  padding: 0;
+}
+
+/* Sit the icon on the first line of the disclaimer, not centered against the
+   whole block. */
+.md-social__link {
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+.md-social__link svg {
+  height: 100%;
+  width: 100%;
+}
+
+.md-copyright,
+.md-social {
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem;
+  line-height: 1.8;
+  color: var(--pw-faint);
+}
+
+.md-copyright__highlight {
+  color: var(--pw-faint);
+}
+
+.md-social__link svg {
+  fill: var(--pw-faint);
+}
+
+.md-social__link:hover svg {
+  fill: var(--pw-ink);
+}
