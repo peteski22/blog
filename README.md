@@ -1,4 +1,4 @@
-# Technical Blog
+# Peter Wilson
 
 Private repository for technical blog posts.
 
