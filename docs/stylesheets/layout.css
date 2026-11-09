@@ -125,22 +125,38 @@
    icons wrap onto their own line. Let the two share one row, with the icons
    pushed to the right edge. */
 .md-footer-meta__inner {
-  align-items: center;
-  gap: 0.4rem 1rem;
+  align-items: flex-start;
+  gap: 0.4rem 1.6rem;
   padding: 0.8rem var(--pw-gutter) 1.6rem;
 }
 
+/* The disclaimer wraps at a readable measure rather than running on until it
+   meets the icons. */
 .md-copyright {
   width: auto;
-  flex: 1 1 20rem;
+  flex: 0 1 auto;
+  max-width: 54ch;
   margin: 0;
+  padding: 0;
   order: 1;
 }
 
 .md-social {
-  margin: 0;
+  margin-left: auto;
   order: 2;
   padding: 0;
+}
+
+/* Sit the icon on the first line of the disclaimer, not centered against the
+   whole block. */
+.md-social__link {
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+.md-social__link svg {
+  height: 100%;
+  width: 100%;
 }
 
 .md-copyright,
