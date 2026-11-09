@@ -24,12 +24,6 @@
     display: none;
   }
 
-  /* With the logo hidden, the title is the first item in the header row. Match
-     the tab row's inset, which is .md-tabs__list's margin plus
-     .md-tabs__item's padding, so the title sits over the first tab. */
-  .md-header__title {
-    margin-left: 0.6rem;
-  }
 }
 
 /* Header */
@@ -66,6 +60,18 @@
 
 .md-tabs {
   border-bottom: 1px solid var(--pw-rule);
+}
+
+/* The first tab sits 0.8rem from the grid edge (list margin plus item
+   padding) while the masthead sits at 1.2rem (header padding plus title
+   margin), so the two rows do not line up. Move the tabs out to match.
+
+   NOTE: Material sets these margins under a [dir=ltr] prefix, so a plain
+   class selector loses on specificity and silently does nothing. The prefix
+   is required here, and it is correct, because the value is direction
+   dependent. */
+[dir="ltr"] .md-tabs__list {
+  margin-left: 0.6rem;
 }
 
 .md-tabs__link {
