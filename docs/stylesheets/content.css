@@ -1,0 +1,151 @@
+/* Prose, code and wide content.
+
+   Sizes are em of the typeset base so the whole scale moves with material's
+   root font-size steps at 100em and 125em. */
+
+.md-typeset {
+  font-size: 0.875rem;
+  line-height: 1.78;
+}
+
+.md-typeset h1 {
+  color: var(--pw-ink);
+  font-size: 2.25em;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.032em;
+  margin: 0 0 0.6em;
+}
+
+.md-typeset h2 {
+  font-size: 0.78em;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--pw-ink);
+  margin: 3.4em 0 1em;
+}
+
+.md-typeset h3 {
+  font-size: 1.09em;
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.4;
+  margin: 2.2em 0 0.5em;
+}
+
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+.md-typeset p {
+  margin: 0 0 1.25em;
+}
+
+.md-typeset a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.md-typeset ul,
+.md-typeset ol {
+  margin-bottom: 1.25em;
+}
+
+.md-typeset li {
+  margin-bottom: 0.4em;
+}
+
+/* An opt-in summary line. Put `{ .lede }` on its own line after the
+   paragraph; attr_list turns that into this class. */
+.md-typeset p.lede {
+  font-family: var(--pw-font-serif);
+  font-size: 1.14em;
+  line-height: 1.56;
+  color: var(--pw-muted);
+  max-width: 34em;
+}
+
+.md-typeset blockquote {
+  border-left: none;
+  padding-left: 0;
+  margin: 2.2em 0;
+  font-size: 1.26em;
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  color: var(--pw-ink);
+}
+
+.md-typeset blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.md-typeset hr {
+  border-bottom-color: var(--pw-rule);
+  margin: 2.4em 0;
+}
+
+/* Code */
+
+.md-typeset code {
+  font-size: 0.78em;
+  border-radius: 0.1rem;
+  box-shadow: none;
+}
+
+.md-typeset pre > code {
+  border: 1px solid var(--pw-rule);
+  border-radius: 0.2rem;
+  line-height: 1.65;
+}
+
+.md-typeset .highlight span.filename {
+  background: var(--pw-surface);
+  border-bottom: 1px solid var(--pw-rule);
+  font-family: var(--md-code-font-family);
+  font-size: 0.7em;
+}
+
+/* Tables */
+
+.md-typeset table:not([class]) {
+  border: 1px solid var(--pw-rule);
+  box-shadow: none;
+  font-size: 0.8em;
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--pw-surface);
+  color: var(--pw-ink);
+  font-weight: 600;
+}
+
+.md-typeset table:not([class]) td {
+  border-top-color: var(--pw-rule);
+}
+
+/* Wide content.
+
+   NOTE: Material sets overflow:auto on pre > code and overflow-x:auto on
+   .md-typeset__scrollwrap. Nothing here may override those, because they are
+   what makes a wide table scroll inside itself instead of making the page
+   scroll sideways. Breakout widens the box first; scrolling handles the rest. */
+@media screen and (min-width: 76.25em) {
+  .md-typeset pre,
+  .md-typeset__scrollwrap {
+    width: var(--pw-col-wide);
+    max-width: var(--pw-col-wide);
+    margin-inline: calc(
+      (var(--pw-col) - 2 * var(--pw-gutter) - var(--pw-col-wide)) / 2
+    );
+  }
+
+  .md-typeset__table {
+    min-width: 100%;
+  }
+}

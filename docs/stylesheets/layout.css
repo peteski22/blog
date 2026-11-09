@@ -7,7 +7,7 @@
 .md-content__inner {
   max-width: var(--pw-col);
   margin-inline: auto;
-  padding: 1.5rem 1rem 4rem;
+  padding: 1.5rem var(--pw-gutter) 4rem;
 }
 
 .md-content__inner::before {

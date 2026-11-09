@@ -6,6 +6,8 @@
 :root {
   --pw-font-serif: "IBM Plex Serif", Georgia, serif;
 
+  --pw-gutter: 1rem;
+
   --pw-col: 45rem;
   --pw-col-wide: 55rem;
   --pw-chrome: 67.5rem;
