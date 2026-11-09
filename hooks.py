@@ -57,7 +57,7 @@ def _render(views, page):
     for view in views:
         count = len(view.posts)
         noun = "post" if count == 1 else "posts"
-        lines.append(f"- [{view.name}]({view.file.src_uri}) &mdash; {count} {noun}")
+        lines.append(f"- [{view.name}]({view.file.src_uri}) ({count} {noun})")
     return "\n".join(lines) if lines else "Nothing here yet."
 
 
