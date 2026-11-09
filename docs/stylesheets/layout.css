@@ -96,7 +96,7 @@
 
 .md-tabs__item--active .md-tabs__link {
   color: var(--pw-ink);
-  box-shadow: 0 0.12rem 0 var(--pw-accent);
+  box-shadow: 0 0.12rem 0 var(--pw-ink);
 }
 
 /* Footer */

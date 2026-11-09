@@ -47,8 +47,12 @@
    mapped onto the variable a rule consumes. Setting a token material derives
    another from does not change the derived one. */
 
-[data-md-color-scheme="default"],
-[data-md-color-scheme="slate"] {
+/* NOTE: The second attribute is for specificity, not for matching. Material's
+   palette sets some of these under [data-md-color-scheme=X][data-md-color-primary=Y],
+   so a single-attribute rule here loses and silently does nothing. Every page
+   carries both attributes. */
+[data-md-color-scheme="default"][data-md-color-primary],
+[data-md-color-scheme="slate"][data-md-color-primary] {
   --md-default-bg-color: var(--pw-bg);
   --md-default-fg-color: var(--pw-ink);
   --md-default-fg-color--light: var(--pw-muted);
@@ -56,12 +60,15 @@
   --md-default-fg-color--lightest: var(--pw-rule);
 
   --md-typeset-color: var(--pw-ink);
-  --md-typeset-a-color: var(--pw-accent);
-  --md-accent-fg-color: var(--pw-accent);
-  /* NOTE: Material declares this as a standalone literal, not derived
-     from the accent, so setting the accent alone leaves it unchanged.
+  /* NOTE: The accent is reserved for admonitions. Links, focus rings and
+     mermaid node fills take the body ink, so color carries meaning in one
+     place rather than decorating the whole page. */
+  --md-typeset-a-color: var(--pw-ink);
+  --md-accent-fg-color: var(--pw-ink);
+  /* NOTE: Material declares this as a standalone literal, not derived from
+     the foreground, so setting the foreground alone leaves it unchanged.
      Mermaid node fills read it. */
-  --md-accent-fg-color--transparent: color-mix(in srgb, var(--pw-accent) 10%, transparent);
+  --md-accent-fg-color--transparent: color-mix(in srgb, var(--pw-ink) 8%, transparent);
 
   /* The header and the active tab take the page background, so the top of the
      page is not a colored bar. */

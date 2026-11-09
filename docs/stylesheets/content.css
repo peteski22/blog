@@ -46,10 +46,18 @@
   margin: 0 0 1.25em;
 }
 
+/* Links are body text plus an underline. The underline carries the
+   affordance, so no color is needed. */
 .md-typeset a {
   text-decoration: underline;
   text-decoration-thickness: 1px;
+  text-decoration-color: var(--pw-faint);
   text-underline-offset: 3px;
+}
+
+.md-typeset a:hover,
+.md-typeset a:focus {
+  text-decoration-color: var(--pw-ink);
 }
 
 .md-typeset ul,
@@ -75,9 +83,9 @@
   border-left: none;
   padding-left: 0;
   margin: 2.2em 0;
-  font-size: 1.26em;
-  line-height: 1.45;
-  letter-spacing: -0.015em;
+  font-size: 1.05em;
+  line-height: 1.6;
+  letter-spacing: -0.008em;
   color: var(--pw-ink);
 }
 

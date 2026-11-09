@@ -80,7 +80,9 @@
 
 .md-post__content > h1 > a:hover,
 .md-post__content > h2 > a:hover {
-  color: var(--pw-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 
 .md-post__content > p {
@@ -96,7 +98,12 @@
   font-family: var(--md-code-font-family);
   font-size: 0.58rem;
   letter-spacing: 0.06em;
+  color: var(--pw-muted);
   text-decoration: none;
+}
+
+.md-post__action a:hover {
+  color: var(--pw-ink);
 }
 
 .md-post__action a:hover {
