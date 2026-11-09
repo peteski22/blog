@@ -6,11 +6,13 @@
 :root {
   --pw-font-serif: "IBM Plex Serif", Georgia, serif;
 
-  --pw-gutter: 1rem;
+  /* NOTE: Material sets html{font-size:125%}, so 1rem is 20px here, not 16px.
+     These are the mockup's pixel widths divided by 20. */
+  --pw-gutter: 1.8rem;
 
-  --pw-col: 45rem;
-  --pw-col-wide: 55rem;
-  --pw-chrome: 67.5rem;
+  --pw-col: 36rem;
+  --pw-col-wide: 44rem;
+  --pw-chrome: 54rem;
 }
 
 [data-md-color-scheme="default"] {

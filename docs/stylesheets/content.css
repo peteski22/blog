@@ -140,9 +140,7 @@
   .md-typeset__scrollwrap {
     width: var(--pw-col-wide);
     max-width: var(--pw-col-wide);
-    margin-inline: calc(
-      (var(--pw-col) - 2 * var(--pw-gutter) - var(--pw-col-wide)) / 2
-    );
+    margin-inline: calc((var(--pw-col) - var(--pw-col-wide)) / 2);
   }
 
   .md-typeset__table {
