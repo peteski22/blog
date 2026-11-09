@@ -1,0 +1,113 @@
+/* Page frame: header, navigation, reading column, footer. */
+
+.md-grid {
+  max-width: var(--pw-chrome);
+}
+
+.md-content__inner {
+  max-width: var(--pw-col);
+  margin-inline: auto;
+  padding: 1.5rem 1rem 4rem;
+}
+
+.md-content__inner::before {
+  display: none;
+}
+
+/* NOTE: Below 76.25em material turns .md-sidebar--primary into the slide-out
+   drawer, which is a phone's only navigation. Hiding it unscoped removes
+   that. .md-sidebar--secondary is the right-hand table of contents, which
+   this design drops. */
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary,
+  .md-sidebar--secondary {
+    display: none;
+  }
+}
+
+/* Header */
+
+.md-header {
+  box-shadow: none;
+}
+
+.md-header__button.md-logo {
+  display: none;
+}
+
+.md-header__title {
+  margin-left: 0;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+}
+
+.md-header__topic:first-child {
+  font-weight: 600;
+}
+
+.md-search__form {
+  background: var(--pw-surface);
+  border: 1px solid var(--pw-rule);
+  border-radius: 0.2rem;
+  box-shadow: none;
+}
+
+.md-search__form:hover {
+  background: var(--pw-surface);
+}
+
+/* Tabs carry the only hairline under the masthead. */
+
+.md-tabs {
+  border-bottom: 1px solid var(--pw-rule);
+}
+
+.md-tabs__link {
+  font-family: var(--md-code-font-family);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+  color: var(--pw-muted);
+  opacity: 1;
+  margin-top: 0.6rem;
+}
+
+.md-tabs__link:hover,
+.md-tabs__link--active {
+  color: var(--pw-ink);
+}
+
+.md-tabs__item--active .md-tabs__link {
+  color: var(--pw-ink);
+  box-shadow: 0 0.12rem 0 var(--pw-accent);
+}
+
+/* Footer */
+
+.md-footer {
+  border-top: 1px solid var(--pw-rule);
+}
+
+.md-footer-meta__inner {
+  padding-block: 0.8rem 1.6rem;
+}
+
+.md-copyright,
+.md-social {
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem;
+  line-height: 1.8;
+  color: var(--pw-faint);
+}
+
+.md-copyright__highlight {
+  color: var(--pw-faint);
+}
+
+.md-social__link svg {
+  fill: var(--pw-faint);
+}
+
+.md-social__link:hover svg {
+  fill: var(--pw-ink);
+}

@@ -32,6 +32,7 @@ theme:
 
 extra_css:
   - stylesheets/theme.css
+  - stylesheets/layout.css
 
 extra:
   social:
