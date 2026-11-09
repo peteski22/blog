@@ -109,6 +109,14 @@
   box-shadow: none;
 }
 
+/* Monospace set at the body ratio looks undersized inside a heading. */
+.md-typeset h1 code,
+.md-typeset h2 code,
+.md-typeset h3 code,
+.md-typeset h4 code {
+  font-size: 0.92em;
+}
+
 .md-typeset pre:not(.mermaid) > code {
   border: 1px solid var(--pw-rule);
   border-radius: 0.2rem;
@@ -124,10 +132,19 @@
 
 /* Tables */
 
+/* NOTE: Material pads the table wrapper and sizes both it and the table as
+   inline-block, so the table shrink-wraps and sits inset from the column.
+   min-width lets it fill the measure while still scrolling when wider. */
+.md-typeset__table {
+  display: block;
+  padding: 0;
+}
+
 .md-typeset table:not([class]) {
   border: 1px solid var(--pw-rule);
   box-shadow: none;
   font-size: 0.8em;
+  min-width: 100%;
 }
 
 .md-typeset table:not([class]) th {

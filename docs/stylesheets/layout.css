@@ -121,8 +121,26 @@
   border-top: 1px solid var(--pw-rule);
 }
 
+/* NOTE: Material gives .md-copyright width:100%, which makes the social
+   icons wrap onto their own line. Let the two share one row, with the icons
+   pushed to the right edge. */
 .md-footer-meta__inner {
-  padding-block: 0.8rem 1.6rem;
+  align-items: center;
+  gap: 0.4rem 1rem;
+  padding: 0.8rem var(--pw-gutter) 1.6rem;
+}
+
+.md-copyright {
+  width: auto;
+  flex: 1 1 20rem;
+  margin: 0;
+  order: 1;
+}
+
+.md-social {
+  margin: 0;
+  order: 2;
+  padding: 0;
 }
 
 .md-copyright,
