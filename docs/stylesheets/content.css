@@ -98,7 +98,7 @@
   box-shadow: none;
 }
 
-.md-typeset pre > code {
+.md-typeset pre:not(.mermaid) > code {
   border: 1px solid var(--pw-rule);
   border-radius: 0.2rem;
   line-height: 1.65;
@@ -148,4 +148,34 @@
   .md-typeset__table {
     min-width: 100%;
   }
+}
+
+/* Diagrams and pannable figures.
+
+   NOTE: Material renders mermaid itself and strips the .mermaid class from the
+   element as it does so, so the rendered diagram cannot be matched by that
+   class. The panzoom wrapper is added at build time and is stable. */
+
+.md-typeset .panzoom-box,
+.md-typeset pre:has(> svg) {
+  background: var(--pw-surface);
+  border: 1px solid var(--pw-rule);
+  border-radius: 0.2rem;
+  margin: 1.8em 0;
+  padding: 0.8rem;
+}
+
+.md-typeset .panzoom-box pre {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.md-typeset .panzoom-button {
+  color: var(--pw-faint);
+}
+
+.md-typeset .panzoom-icon {
+  fill: var(--pw-faint);
 }

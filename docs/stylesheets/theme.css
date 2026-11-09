@@ -56,6 +56,10 @@
   --md-typeset-color: var(--pw-ink);
   --md-typeset-a-color: var(--pw-accent);
   --md-accent-fg-color: var(--pw-accent);
+  /* NOTE: Material declares this as a standalone literal, not derived
+     from the accent, so setting the accent alone leaves it unchanged.
+     Mermaid node fills read it. */
+  --md-accent-fg-color--transparent: color-mix(in srgb, var(--pw-accent) 10%, transparent);
 
   /* The header and the active tab take the page background, so the top of the
      page is not a colored bar. */
