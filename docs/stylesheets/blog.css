@@ -1,5 +1,6 @@
 /* The post list on the index, archive and category pages. */
 
+.md-post--excerpt .md-post__authors,
 .md-post__authors {
   display: none;
 }
@@ -36,14 +37,12 @@
   gap: 0 0.5rem;
 }
 
-/* The template emits date, categories, read time. Read time reads better
-   next to the date. */
-.md-post__meta .md-meta__item:nth-child(2) {
-  order: 3;
-}
-
-.md-post__meta .md-meta__item:nth-child(3) {
-  order: 2;
+/* NOTE: Material already separates these with an ::after on every item but
+   the last. Replace it rather than adding a second mark, and keep the
+   template's own order, because an `order` property moves the box while the
+   pseudo-element stays bound to its DOM position. */
+.md-post__meta .md-meta__item:not(:last-child)::after {
+  content: none;
 }
 
 .md-post__meta .md-meta__item + .md-meta__item::before {

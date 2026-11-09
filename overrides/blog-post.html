@@ -1,4 +1,5 @@
 {% extends "main.html" %}
+{% import "partials/nav-item.html" as item with context %}
 
 {#-
   Material renders a post's date, read time, categories and author in a left
@@ -15,6 +16,14 @@
         <time datetime="{{ page.config.date.created }}">
           {{- page.config.date.created | date -}}
         </time>
+        {%- if page.config.date.updated %}
+          <span>
+            Updated
+            <time datetime="{{ page.config.date.updated }}">
+              {{- page.config.date.updated | date -}}
+            </time>
+          </span>
+        {%- endif %}
         {%- if page.config.readtime %}
           {%- set time = page.config.readtime %}
           <span>
@@ -40,6 +49,16 @@
       {% block content %}
         {% include "partials/content.html" %}
       {% endblock %}
+      {%- if page.config.links %}
+        <nav class="pw-postlinks">
+          <h2>{{ lang.t("blog.references") }}</h2>
+          <ul class="md-nav__list">
+            {%- for nav_item in page.config.links %}
+              {{ item.render(nav_item, "__ref_" ~ loop.index, 1) }}
+            {%- endfor %}
+          </ul>
+        </nav>
+      {%- endif %}
     </article>
   </div>
 {% endblock %}

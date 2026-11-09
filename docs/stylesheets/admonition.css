@@ -16,8 +16,8 @@
   padding: 0.1rem 0.8rem 0.6rem;
 }
 
-.md-typeset .admonition-title,
-.md-typeset summary {
+.md-typeset .admonition > .admonition-title,
+.md-typeset details > summary {
   background: none;
   border: none;
   margin: 0;
@@ -50,28 +50,48 @@
   margin-bottom: 0;
 }
 
-/* Twelve types, four edges. Listed A-Z within each group. */
+/* Twelve types, four edges. Listed A-Z within each group.
 
-.md-typeset .abstract,
-.md-typeset .example,
-.md-typeset .info,
-.md-typeset .note,
-.md-typeset .quote {
+   NOTE: Material sets a per-type border-color at three levels of
+   specificity, so the type class has to appear here too. Setting only the
+   custom property leaves material's stock hue on the stripe. */
+
+.md-typeset .admonition.abstract,
+.md-typeset details.abstract,
+.md-typeset .admonition.example,
+.md-typeset details.example,
+.md-typeset .admonition.info,
+.md-typeset details.info,
+.md-typeset .admonition.note,
+.md-typeset details.note,
+.md-typeset .admonition.quote,
+.md-typeset details.quote {
   --pw-adm-edge: var(--pw-adm-neutral);
+  border-left-color: var(--pw-adm-neutral);
 }
 
-.md-typeset .question,
-.md-typeset .success,
-.md-typeset .tip {
+.md-typeset .admonition.question,
+.md-typeset details.question,
+.md-typeset .admonition.success,
+.md-typeset details.success,
+.md-typeset .admonition.tip,
+.md-typeset details.tip {
   --pw-adm-edge: var(--pw-accent);
+  border-left-color: var(--pw-accent);
 }
 
-.md-typeset .warning {
+.md-typeset .admonition.warning,
+.md-typeset details.warning {
   --pw-adm-edge: var(--pw-adm-amber);
+  border-left-color: var(--pw-adm-amber);
 }
 
-.md-typeset .bug,
-.md-typeset .danger,
-.md-typeset .failure {
+.md-typeset .admonition.bug,
+.md-typeset details.bug,
+.md-typeset .admonition.danger,
+.md-typeset details.danger,
+.md-typeset .admonition.failure,
+.md-typeset details.failure {
   --pw-adm-edge: var(--pw-adm-red);
+  border-left-color: var(--pw-adm-red);
 }

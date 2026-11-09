@@ -4,11 +4,25 @@
   max-width: var(--pw-chrome);
 }
 
-/* The max-width carries the gutter, so the text measure is exactly --pw-col. */
+/* The max-width carries the gutter, so the text measure is exactly --pw-col.
+
+   NOTE: The min() is load-bearing. On a post page material makes
+   .md-content a flex container, and a flex item with auto cross-axis
+   margins is sized to its content, not to the viewport, so a bare
+   max-width lets a wide code block push the page sideways on a phone. */
 .md-content__inner {
-  max-width: calc(var(--pw-col) + 2 * var(--pw-gutter));
-  margin-inline: auto;
+  max-width: min(calc(var(--pw-col) + 2 * var(--pw-gutter)), 100%);
   padding: 1.5rem var(--pw-gutter) 4rem;
+}
+
+/* Centering the column means beating material's own margin rules, which are
+   written at five levels of specificity. Each group below mirrors one of
+   them so that source order decides. */
+.md-content__inner,
+[dir="ltr"] .md-content--post > .md-content__inner,
+[dir="ltr"] .md-sidebar--primary:not([hidden]) ~ .md-content > .md-content__inner,
+[dir="ltr"] .md-sidebar--secondary:not([hidden]) ~ .md-content > .md-content__inner {
+  margin-inline: auto;
 }
 
 .md-content__inner::before {
@@ -20,8 +34,10 @@
    that. .md-sidebar--secondary is the right-hand table of contents, which
    this design drops. */
 @media screen and (min-width: 76.25em) {
-  .md-sidebar--primary,
-  .md-sidebar--secondary {
+  /* :not([hidden]) matches material's own display rule, which would
+     otherwise win and show the table of contents. */
+  .md-sidebar--primary:not([hidden]),
+  .md-sidebar--secondary:not([hidden]) {
     display: none;
   }
 

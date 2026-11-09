@@ -79,6 +79,7 @@
   max-width: 34em;
 }
 
+[dir="ltr"] .md-typeset blockquote,
 .md-typeset blockquote {
   border-left: none;
   padding-left: 0;
@@ -144,8 +145,12 @@
    what makes a wide table scroll inside itself instead of making the page
    scroll sideways. Breakout widens the box first; scrolling handles the rest. */
 @media screen and (min-width: 76.25em) {
-  .md-typeset pre,
-  .md-typeset__scrollwrap {
+  /* Child combinators only. A descendant selector also matches a code block
+     inside an admonition, a list or a quote, which then tears out through
+     its parent's padding. */
+  .md-content__inner > pre,
+  .md-content__inner > .highlight > pre,
+  .md-content__inner > .md-typeset__scrollwrap {
     width: var(--pw-col-wide);
     max-width: var(--pw-col-wide);
     margin-inline: calc((var(--pw-col) - var(--pw-col-wide)) / 2);
@@ -164,7 +169,7 @@
 
 .md-typeset .panzoom-box,
 .md-typeset pre:has(> svg) {
-  background: var(--pw-surface);
+  background: var(--pw-figure-bg);
   border: 1px solid var(--pw-rule);
   border-radius: 0.2rem;
   margin: 1.8em 0;

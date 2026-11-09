@@ -27,11 +27,13 @@
   --pw-adm-amber: #8a6a1f;
   --pw-adm-neutral: #5b656f;
   --pw-adm-red: #8d2f24;
+
+  --pw-figure-bg: var(--pw-surface);
 }
 
 [data-md-color-scheme="slate"] {
-  --pw-bg: #101113;
-  --pw-surface: #1a1b1e;
+  --pw-bg: #1e2125;
+  --pw-surface: #262a2f;
   --pw-ink: #e8e9eb;
   --pw-muted: #aab1b9;
   --pw-faint: #8d949c;
@@ -41,6 +43,16 @@
   --pw-adm-amber: #bd954a;
   --pw-adm-neutral: #737c87;
   --pw-adm-red: #d0796c;
+
+  /* NOTE: Diagrams keep a light face in dark mode, the way a photograph
+     would. Posts hard-code pale subgraph fills, so inverting the labels
+     would leave light text on a light shape. */
+  --pw-figure-bg: #f3f3f1;
+  --md-mermaid-label-bg-color: #f8f8f6;
+  --md-mermaid-label-fg-color: #1e2125;
+  --md-mermaid-node-bg-color: #e7e9e4;
+  --md-mermaid-node-fg-color: #1e2125;
+  --md-mermaid-edge-color: #4a4f57;
 }
 
 /* NOTE: Material's own rules read the --md-* names, so each token has to be
