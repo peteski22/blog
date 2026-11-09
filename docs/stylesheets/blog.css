@@ -103,3 +103,30 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* One meta line above a post title, from overrides/blog-post.html. */
+
+.pw-postmeta {
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  color: var(--pw-faint);
+  margin-bottom: 1.4rem;
+}
+
+.pw-postmeta > * + *::before {
+  content: "·";
+  margin: 0 0.5rem;
+  opacity: 0.55;
+}
+
+.pw-postmeta a {
+  color: var(--pw-faint);
+  text-decoration: none;
+}
+
+.pw-postmeta a:hover {
+  color: var(--pw-ink);
+}

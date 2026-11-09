@@ -1,0 +1,45 @@
+{% extends "main.html" %}
+
+{#-
+  Material renders a post's date, read time, categories and author in a left
+  sidebar. This design has no sidebar, so the sidebar is dropped and the same
+  values are printed as one line above the title.
+
+  Each value is wrapped on its own, so a post with no categories or no author
+  emits no element and the separator rule never leaves a dangling mark.
+-#}
+{% block container %}
+  <div class="md-content md-content--post" data-md-component="content">
+    <article class="md-content__inner md-typeset">
+      <div class="pw-postmeta">
+        <time datetime="{{ page.config.date.created }}">
+          {{- page.config.date.created | date -}}
+        </time>
+        {%- if page.config.readtime %}
+          {%- set time = page.config.readtime %}
+          <span>
+            {%- if time == 1 -%}
+              {{ lang.t("readtime.one") }}
+            {%- else -%}
+              {{ lang.t("readtime.other") | replace("#", time) }}
+            {%- endif -%}
+          </span>
+        {%- endif %}
+        {%- if page.categories %}
+          <span>
+            {%- for category in page.categories -%}
+              <a href="{{ category.url | url }}">{{ category.title }}</a>
+              {%- if loop.revindex > 1 %}, {% endif -%}
+            {%- endfor -%}
+          </span>
+        {%- endif %}
+        {%- for author in page.authors %}
+          <span>{{ author.name }}</span>
+        {%- endfor %}
+      </div>
+      {% block content %}
+        {% include "partials/content.html" %}
+      {% endblock %}
+    </article>
+  </div>
+{% endblock %}
