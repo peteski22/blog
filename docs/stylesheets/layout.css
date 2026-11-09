@@ -23,6 +23,13 @@
   .md-sidebar--secondary {
     display: none;
   }
+
+  /* With the logo hidden, the title is the first item in the header row. Match
+     the tab row's inset, which is .md-tabs__list's margin plus
+     .md-tabs__item's padding, so the title sits over the first tab. */
+  .md-header__title {
+    margin-left: 0.6rem;
+  }
 }
 
 /* Header */
@@ -36,7 +43,6 @@
 }
 
 .md-header__title {
-  margin-left: 0;
   font-weight: 600;
   letter-spacing: -0.012em;
 }
