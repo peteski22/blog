@@ -34,6 +34,7 @@ extra_css:
   - stylesheets/theme.css
   - stylesheets/layout.css
   - stylesheets/content.css
+  - stylesheets/admonition.css
 
 extra:
   social:

@@ -21,6 +21,10 @@
   --pw-faint: #9b9fa6;
   --pw-rule: #11121412;
   --pw-accent: #0b5d51;
+
+  --pw-adm-amber: #8a6a1f;
+  --pw-adm-neutral: #5b656f;
+  --pw-adm-red: #8d2f24;
 }
 
 [data-md-color-scheme="slate"] {
@@ -31,6 +35,10 @@
   --pw-faint: #6e747c;
   --pw-rule: #ffffff17;
   --pw-accent: #56b8a6;
+
+  --pw-adm-amber: #bd954a;
+  --pw-adm-neutral: #737c87;
+  --pw-adm-red: #d0796c;
 }
 
 /* NOTE: Material's own rules read the --md-* names, so each token has to be
