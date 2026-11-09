@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Peter Wilson">
+  <style>
+    .plate { fill: #121315; }
+    .mark { fill: #fcfcfb; }
+    @media (prefers-color-scheme: dark) {
+      .plate { fill: #e8e9eb; }
+      .mark { fill: #1e2125; }
+    }
+  </style>
+  <rect class="plate" width="32" height="32" rx="7" />
+  <text
+    class="mark"
+    x="16"
+    y="23.2"
+    text-anchor="middle"
+    font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif"
+    font-size="19"
+    font-weight="600"
+    letter-spacing="-1.1"
+  >pw</text>
+</svg>

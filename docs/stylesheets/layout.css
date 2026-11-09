@@ -49,7 +49,10 @@
   box-shadow: none;
 }
 
-.md-header__button.md-logo {
+/* The default glyph is a generic book. It is hidden in the header and in the
+   mobile drawer, which render it from different class names. */
+.md-header__button.md-logo,
+.md-nav__button.md-logo {
   display: none;
 }
 
@@ -131,14 +134,20 @@
 }
 
 /* The disclaimer wraps at a readable measure rather than running on until it
-   meets the icons. */
+   meets the icons. balance evens the line lengths and keeps the last word off
+   a line of its own. */
 .md-copyright {
   width: auto;
   flex: 0 1 auto;
-  max-width: 54ch;
+  max-width: 64ch;
   margin: 0;
   padding: 0;
   order: 1;
+}
+
+.md-copyright__highlight {
+  text-wrap: balance;
+  margin-bottom: 0.35rem;
 }
 
 .md-social {
